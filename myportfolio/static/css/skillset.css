@@ -1,0 +1,393 @@
+body {
+    transition: background-color 1s ease-in-out;
+  }
+
+.bg-light {
+    background-color: transparent !important; /* 배경색을 투명으로 설정합니다. */
+}
+
+.bg-danger {
+    background-color: transparent !important; /* 배경색을 투명으로 설정합니다. */
+}
+
+.hidden-text {
+position: absolute;
+left: -9999px;
+top: -9999px;
+}
+
+#fixed_content{
+    transition: all 0.3s ease;
+    white-space: pre-wrap;
+    text-align: left;
+    font-weight: bold;
+    font-size: 14px;
+    position: fixed;
+    left:60px;
+    top:300px;
+    background-color: #000000;
+    color:#ffffff;
+    width:200px;
+    height: 410px;
+    z-index: 99;
+    border-radius: 15px;
+    padding:15px;
+}
+
+#fixed_content::after{
+    content: "|";
+    right: 0;
+    color:#005ea8;
+    animation: caret .8s infinite;
+}
+   
+   
+@keyframes caret {
+    50% {
+    opacity:0;
+    }
+}
+
+#myskillbook{
+    margin-top: 180px;
+}
+
+#web1{
+    margin-bottom: 20px;
+}
+
+#tensorflow{
+    width:200px;
+}
+
+.w70{
+    width: 70px;
+}
+.w100{
+    width:100px;
+}
+
+.w150{
+    width: 150px;
+}
+
+.w300{
+    width: 300px;
+}
+
+.w200{
+    width:200px;
+}
+
+.w150{
+    width:150px;
+}
+#skilltext{
+
+    text-align: center;
+}
+
+#buttonDiv{
+ margin-top: 200px;   
+}
+
+#left_button{
+    font-size:50px;
+    font-weight: normal;
+    cursor:pointer;
+}
+#right_button{
+    font-size:50px;
+    font-weight: normal;
+    cursor:pointer;
+}
+
+
+#intro_1{
+    display:block;
+    opacity:1;
+    transition:all ease 500ms;
+}
+#intro_2{
+    display:none;
+    opacity:0;
+    transition:all ease 500ms;
+}
+#intro_3{
+    display:none;
+    opacity:0;
+    transition:all ease 500ms;
+}
+#intro_4{
+    display:none;   
+    opacity:0;
+    transition:all ease 500ms; 
+}
+#intro_5{
+    display:none;
+    opacity:0;
+    transition:all ease 500ms;
+}
+#intro_6{
+    display:none;
+    opacity:0;
+    transition:all ease 500ms;
+}
+
+
+/* 전체 컨테이너 스타일 */
+.container-full {
+    display: flex;
+    align-items: flex-end;
+    height: 50vh;
+    position: relative;
+}
+
+/* 왼쪽 버튼 영역 스타일 */
+.button-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* 오른쪽 정렬 */
+    position: relative; /* 상대 위치 지정 */
+}
+
+/* "WEB" 텍스트 스타일 */
+.web-text {
+    position: absolute; /* 절대 위치 지정 */
+    top: -10%; /* 수직 가운데 정렬 */
+    left: -10px; /* 왼쪽으로 이동하여 회전 중심 맞춤 */
+    transform: rotate(-90deg); /* 90도 회전 */
+    transform-origin: center; /* 회전 중심 지정 */
+    font-size: 200px; /* 원하는 크기 설정 */
+    font-family: 'Roboto', sans-serif; /* Roboto 폰트로 설정 */
+    font-weight: bold; /* 굵은 스타일 설정 */   
+    color: black; /* 텍스트 색상 */
+    z-index:-1;
+
+}
+
+/* 버튼 스타일 */
+.btn {
+    width: 130px;
+    height: 40px;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px 25px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+    7px 7px 20px 0px rgba(0,0,0,.1),
+    4px 4px 5px 0px rgba(0,0,0,.1);
+    outline: none;
+    border: none;
+}
+
+.btn-html {
+    background: #ff0000;
+    background: linear-gradient(0deg, rgba(255,0,0,1) 0%, rgba(200,0,0,1) 100%);
+}
+.btn-html:hover {
+    background: #ff4040; /* 예시로 조금 밝은 빨간색을 사용했습니다. */
+    background: linear-gradient(0deg, rgba(255,64,64,1) 0%, rgba(255,0,0,1) 100%);
+}
+.btn-css {
+    background-color: #3399ff; /* 파랑 */
+    background: #3399ff;
+    background: linear-gradient(0deg, rgba(51,153,255,1) 0%, rgba(0,128,255,1) 100%);
+}
+.btn-css:hover {
+    background: #66b3ff;
+    background: linear-gradient(0deg, rgba(102,179,255,1) 0%, rgba(51,153,255,1) 100%);
+}
+.btn-javascript {
+    background: #ffD700;
+    background: linear-gradient(0deg, rgba(255,215,0,1) 0%, rgba(255,200,0,1) 100%);
+}
+.btn-javascript:hover {
+    background: #ffdb4d;
+    background: linear-gradient(0deg, rgba(255,219,77,1) 0%, rgba(255,215,0,1) 100%);
+    }
+
+.btn-django {
+    background: #4CAF50;
+    background: linear-gradient(0deg, rgba(76,175,80,1) 0%, rgba(60,150,60,1) 100%);
+}
+.btn-django:hover {
+    background: #5cb85c;
+    background: linear-gradient(0deg, rgba(92,184,92,1) 0%, rgba(76,175,80,1) 100%);
+}
+
+.btn-bootstrap {
+    background: #800080;
+    background: linear-gradient(0deg, rgba(128,0,128,1) 0%, rgba(100,0,100,1) 100%);
+}
+.btn-bootstrap {
+    background: #993399;
+    background: linear-gradient(0deg, rgba(153,51,153,1) 0%, rgba(128,0,128,1) 100%);
+    }
+
+.btn-beautifulsoup {
+    background: #ff69b4;
+    background: linear-gradient(0deg, rgba(255,105,180,1) 0%, rgba(255,80,150,1) 100%);  
+}
+.btn-beautifulsoup {
+    background: #ff80cc;
+    background: linear-gradient(0deg, rgba(255,128,204,1) 0%, rgba(255,105,180,1) 100%);
+}
+
+.btn-selenium {
+    background: #32CD32;
+    background: linear-gradient(0deg, rgba(50,205,50,1) 0%, rgba(40,180,40,1) 100%);
+}
+    
+.btn-selenium {
+    background: #3fff3f;
+    background: linear-gradient(0deg, rgba(63,255,63,1) 0%, rgba(50,205,50,1) 100%);
+}
+
+/* 오른쪽 캔버스 영역 스타일 */
+.canvas-container {
+    flex: 2; /* 2/3 차지하도록 조정 */
+}
+
+/* 여기부터 AI (slide3)*/
+
+#canvasDiv{
+    width:300px;
+}
+
+#myCanvas {
+    width: 100%;
+    height: calc(100% - 60px);
+    border: none;
+}
+
+
+.ai-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.ai-text {
+    width: 80%;
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    color: white;
+    margin-top: 80px;
+    z-index:-1;
+    text-align: center;
+}
+
+#canvasDiv{
+    background-color: #ffffff;
+}
+
+.db-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 오른쪽 정렬 */
+}
+.db-text {
+    width: 80%;
+    font-size: 60px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    color: black;
+    margin-top: 80px;
+    z-index:-1;
+    text-align: center;
+}
+
+#page3{
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 1s ease-in-out;
+    transition: opacity 1.5s ease-in-out;
+}
+
+#toolVar{
+    width:300px;
+    
+}
+
+.slider {
+    -webkit-appearance: none; /* 기본 CSS 스타일을 적용하지 않기 위해서 */
+    width: 100%; /* 슬라이더 길이 */
+    height: 5px; /* 슬라이더 두께 */
+    border-radius: 5px; /* 슬라이더 모서리를 약간 둥글게 */
+    background: "#FFFFF"; /* 슬라이더 색상 */
+    outline: none; /* 슬라이더 테두리 없이 */
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* 기본 CSS 스타일을 적용하지 않기 위해서 */
+    appearance: none; /* 기본 CSS 스타일을 적용하지 않기 위해서 */
+    width: 15px; /* 슬라이더 핸들 길이 */
+    height: 5px; /* 슬라이더 핸들 높이 */
+    border-radius: 5%; /* 핸들 모양을 원모양으로 만들기 위함 */
+    background: rgb(0, 0, 0); /* 슬라이더 핸들 색상 */
+    cursor: pointer; /* 슬라이더 핸들에 마우스를 갖다대면 포인터로 변경 */
+}
+
+#sliderValue{
+    color: #ffffff;
+    background-color: black;
+    border: none;
+    width: 47px;
+    height: 25px;
+}
+
+
+.pencilcase{
+    width: 27px;
+    cursor: pointer;
+}
+
+#overview{
+    color:white;
+}
+.overviewLabel{
+    color:#747576;
+}
+
+.overviewInput{
+    transition: background-color 1s ease-in-out;
+    background-color: #ffffff;
+    color: #ffffff;
+    border:none;
+    text-align: center;
+}
+
+.overviewInput:focus{
+    outline: none;
+}
+
+.overviewInput::placeholder{
+    color:#292929;
+}
+
+#exhibit{
+    border-color: #ffffff;
+    border-radius: 1;
+    outline:none;
+}
+
+.git-text {
+    width: 80%;
+    font-size: 100px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    color: black;
+    margin-top: 280px;
+    z-index:-1;
+    text-align: center;
+}
+

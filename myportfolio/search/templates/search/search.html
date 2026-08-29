@@ -1,0 +1,630 @@
+{% extends "TRBT_main/base.html" %}
+{% load static %}
+{% block main %}
+<div class="container d-flex justify-content-center">
+    <div style="width: 1080px;height: 190px; background-color: #fff; margin-top: 50px; border-radius: 15px; align-items: center; padding: 15px;">
+
+        <div style="width: 1050px; height: 140px; display: flex; align-items: center;">
+            <div style="display: flex;">
+                <div style="width: 120px; height: 120px;">
+                    <img src="https://ddragon.leagueoflegends.com/cdn/13.17.1/img/profileicon/{{ info.profileIconId }}.png" width='120px'>
+                </div>
+                <div style="margin-left: 10px;">
+                    <div style="display: flex; line-height: 55px; align-items: flex-start;">Lv: {% if info %}{{ info.summonerLevel }}{% endif %}</div>
+                    <div style="font-size: 26px ; font-weight: bolder;">{% if info %}{{ info.name }}{% endif %} #{% if tagLine %}{{ tagLine.tagLine }}{% endif %}</div>
+                    {% comment %} <div>레더 랭킹 632위 (상위0.0183%)</div> {% endcomment %}
+                </div>
+                <div style="display: flex; margin-left:140px; flex-center; flex-direction:column;">
+                    <div style="display: flex; line-height: 55px; align-items:center; justify-content: center;">숙련도 기반 챔피언 추천</div>
+                    <div style="display: flex; space-evenly;">
+                        <div width: 120x; height: 120px; border-radius: 5px;><img src="https://ddragon.leagueoflegends.com/cdn/13.17.1/img/champion/{{ recommend_champ1 }}.png" width="120px" height="120px"></div>
+                        <div width: 120x; height: 120px; border-radius: 5px;><img src="https://ddragon.leagueoflegends.com/cdn/13.17.1/img/champion/{{ recommend_champ2 }}.png" width="120px" height="120px"></div>
+                        <div width: 120x; height: 120px; border-radius: 5px;><img src="https://ddragon.leagueoflegends.com/cdn/13.17.1/img/champion/{{ recommend_champ3 }}.png" width="120px" height="120px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="position: relative;;display: flex; width: 1050px; height: 40px; align-items: center; margin-top: -10px;">
+            <!-- 시즌별 루프 돌리기 -->
+            <div class="search_rank_box">
+                <div class="search_rank"> 
+                    {% comment %} s2022 Diamond1 {% endcomment %}
+                </div>
+            </div>
+            <div class="search_rank_box">
+                <div class="search_rank"> 
+                    {% comment %} s2023 Diamond1 {% endcomment %}
+                </div>
+            </div>
+            <div class="search_rank_box">
+                <div class="search_rank"> 
+                    {% comment %} s2024 Diamond1 {% endcomment %}
+                </div>
+            </div>
+            
+            <!--여기까지 루프 -->
+            <div style="position: relative; justify-content: right; margin-left: 540px;">
+                <button  class ='search_rank_btn' type="submit" >
+                    갱신
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container d-flex justify-content-center align-items-center">
+    <div style="width: 1080px;height: 100%; margin-top: -20px; display: flex;">
+        <!-- 상위 정보 -->
+        <div style="width: 320px; height: 600px; margin-right: 20px;">
+        
+            <div style="width: 100%; height: 140px; background-color: #fff;border-radius: 15px;">
+
+                <div style="width: 100%;height: 40px; border-bottom: 3px solid #f5f5f5; display: flex; align-items: center; padding: 10px;">
+                    <a style="display:flex; align-items: center; color: black; font-weight: 900; font-size: 14px;">솔로랭크</a>
+                </div>
+
+                <!-- 솔랭 티어 아이콘 및 점수 -->
+                <div style="width: 100%; height: 100px; display: flex; align-items: center; padding: 10px; position: relative;">
+                    <div style="width: 80px; height: 80px ; background-color: #f5f5f5; border-radius: 50px;display: flex; justify-content: cetner; align-items: center;">
+                        <img src="{% static 'bootstrap\img\tierIcon.png' %}" alt="tier_img">
+                    </div>
+                    <div style="flex:1 ; justify-content: center; margin-left: 10px;">
+                        <div style="font-size: 16px; font-weight: bolder;">
+                            {{ solo.tier }}
+                        </div>
+                        <div style="color:#A0A0A0; font-size: 13px; font-weight: bolder;">
+                            {{ solo.rank }}
+                        </div>
+                    </div>
+                    <div style="flex:1;  text-align: right">
+                        <div style="color:#A0A0A0; font-size: 13px; font-weight: bolder;">
+                            {{ solo.wins }}승 {{ solo.losses }}패
+                        </div>
+                        <div style="color:#A0A0A0; font-size: 13px; font-weight: bolder;">
+                            승률 {{ winrate }}%
+                        </div>
+                    </div>
+                </div>
+                <!-- 자랭 -->
+                <div style="width: 100%; height: 40px; background-color: #fff;border-radius: 15px; margin-top: 10px; margin-bottom: 10px;">
+                    <div style="width: 100%;height: 40px;display: flex; align-items: center; padding: 10px;">
+                        <span style="display:flex; align-items: center; color: black; font-weight: 900; font-size: 14px;">자유 랭크</span>
+                        <div style="flex:1; text-align: right;">
+                            <span style="font-size: 16px; font-weight: bolder;">{{ free.tier }} </span><span style="color:#A0A0A0; font-size: 16px; font-weight: bolder;">{{ free.rank }}</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- 모스트챔피언 -->
+                <div style="width: 320px;height: 40px; background-color: #fff;display: flex; align-items: center; padding: 10px; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                    <a style="display:flex; align-items: center; color: black; font-weight: 900; font-size: 14px;">모스트 챔피언</a>
+                </div>
+                <!-- 루 프 -->
+                <div style="width: 100%; height: 60px; display: flex; align-items: center; padding: 10px; position: relative; background-color: #fff; border-top:3px solid #f5f5f5 ;">
+                    <div style="justify-content: center; margin-right: 5px;">
+                        <img src="{% static 'bootstrap\img\champ.png' %}" alt="tier_img">
+                    </div>
+                    <div style="display: flex; justify-content: center; width: 85px; height: 60px; align-items: start; flex-direction: column;">
+                        <div style="font-size: 13px; font-weight: bolder;">
+                            르블랑
+                        </div>
+                        <div style="font-size: 10px; color: #A0A0A0; font-weight: bold;">
+                            CS207.5(7.9)
+                        </div>
+                    </div>
+                    <div style="flex:1; justify-content: center;">
+                        <div style="font-size: 14px; color: #00BBA3; font-weight: bolder;">
+                            3.66:1 평점
+                        </div>
+                        <div style="font-size: 12px; color: #A0A0A0; font-weight: bold;">
+                            6.7 / 3.8 / 7.1
+                        </div>
+                    </div>
+                    <div style="flex:1;  text-align: right">
+                        <div style="font-size: 14px; font-weight: bolder;">
+                            55%
+                        </div>
+                        <div style="font-size: 13px; color: #A0A0A0; font-weight: bold;">
+                            49게임
+                        </div>
+                    </div>
+                </div>
+                <div style="width: 100%; height: 60px; display: flex; align-items: center; padding: 10px; position: relative; background-color: #fff; border-top:3px solid #f5f5f5 ;">
+                    <div style="justify-content: center; margin-right: 5px;">
+                        <img src="{% static 'bootstrap\img\champ.png' %}" alt="tier_img">
+                    </div>
+                    <div style="display: flex; justify-content: center; width: 85px; height: 60px; align-items: start; flex-direction: column;">
+                        <div style="font-size: 13px; font-weight: bolder;">
+                            르블랑
+                        </div>
+                        <div style="font-size: 10px; color: #A0A0A0; font-weight: bold;">
+                            CS207.5(7.9)
+                        </div>
+                    </div>
+                    <div style="flex:1; justify-content: center;">
+                        <div style="font-size: 14px; color: #00BBA3; font-weight: bolder;">
+                            3.66:1 평점
+                        </div>
+                        <div style="font-size: 12px; color: #A0A0A0; font-weight: bold;">
+                            6.7 / 3.8 / 7.1
+                        </div>
+                    </div>
+                    <div style="flex:1;  text-align: right">
+                        <div style="font-size: 14px; font-weight: bolder;">
+                            55%
+                        </div>
+                        <div style="font-size: 13px; color: #A0A0A0; font-weight: bold;">
+                            49게임
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 루 프 -->
+            </div>
+
+
+        </div>
+        <div style="width: 740px; height: 600px;">
+            <div style="width: 100%; height: 140px; background-color: #fff; border-radius: 15px; display: flex; align-items: center; justify-content: space-between;">
+                <!-- 전적 상위 결과 -->
+                <div class="search_top">
+                    <div style="width: 240px;height: 45px;  align-items: center; justify-content: center;  display: flex; font-size: 14px  ; font-weight: bolder; color: #02BDA5;">
+                        19전 9승 10패
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <div class="pie" style="--p:50;--b:8px;--c:#02BDA5;">50%</div>
+                        <div style="display:flex ;justify-content: center; flex-direction: column; margin-left: 10px;">      
+                            <div style="display:flex; justify-content: center; font-weight: bolder;">2.60KDA</div>
+                            <div style="display:flex; color:#A0A0A0; font-size: 14px; font-weight: bolder;">5.1 / 4.2 / 5.9</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 전적 상위 결과 -->
+                <div class="search_top" style="margin-left: -15px;">
+                    <div style="width: 240px;height: 45px;  align-items: center; justify-content: center;  display: flex; font-size: 14px  ; font-weight: bolder; color: #02BDA5;">
+                        트롤점수
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <div class="pie" style="--p:50;--b:8px;--c:#02BDA5;">50%</div>
+                        <div style="display:flex ;justify-content: center; flex-direction: column; margin-left: 10px;">      
+                            <div style="display:flex; justify-content: center; font-weight: bolder;">50%</div>
+                            <div style="display:flex; color:#A0A0A0; font-size: 14px; font-weight: bolder;">트롤점수:50%</div>
+                        </div>
+                    </div>
+                </div>                
+                <!--주요 라인 그래프-->
+                <div style="display: flex; align-items: center; justify-content: space-around; width: 200px ; height: 100px; align-items: center;">
+
+                    <div style="display: flex; flex-direction: column;">
+                        <div  class ="progress progress-bar-vertical"style="width: 20px ;height: 40px;">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="height: 20%;"></div>
+                        </div>
+                        <div><img src="{% static 'bootstrap\img\Top.png' %}"></div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column;">
+                        <div  class ="progress progress-bar-vertical"style="width: 20px ;height: 40px;">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="height: 20%;"></div>
+                        </div>
+                        <div><img src="{% static 'bootstrap\img\jg.png' %}"></div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column;">
+                        <div  class ="progress progress-bar-vertical"style="width: 20px ;height: 40px;">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="height: 70%;"></div>
+                        </div>
+                        <div><img src="{% static 'bootstrap\img\mid.png' %}"></div>
+                    </div>
+                    <div style="display: flex; flex-direction: column;">
+                        <div  class ="progress progress-bar-vertical"style="width: 20px ;height: 40px;">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="height: 20%;"></div>
+                        </div>
+                        <div><img src="{% static 'bootstrap\img\bot.png' %}"></div>
+                    </div>
+                    <div style="display: flex; flex-direction: column;">    
+                        <div  class ="progress progress-bar-vertical"style="width: 20px ;height: 40px;">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="height: 20%;"></div>
+                        </div>
+                        <div><img src="{% static 'bootstrap\img\sup.png' %}"></div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+            <!--전적 검색 화면-->
+            <div class="my-custom-accordion">
+                <div class="score_box_win">
+                    <div style="width: 90px; height: 70px; display: flex; flex-direction: column;">
+                        <div class="score_win_font">승리</div>
+                        <div style="font-size: 12px;"> <strong>솔랭</strong> 16:24</div>
+                        <div style="font-size: 12px;">1주일 전</div>
+                    </div>
+                    <div class="kda_box">
+                        <div style="width: 225px; height: 60px; display: flex; align-items: center;">
+                            <div style="width: 55x; height: 55px; border-radius: 5px;"><img src="{% static 'bootstrap\img\champ.png' %}" width="55px" height="55px"></div>
+                            <div style="display: flex; align-items:center;  width: 60px; height: 60px;">
+                                <div class="spell" style="display: flex; flex-direction: column; justify-content: space-around; padding: 5px;">
+                                    <div style="padding-bottom: 3px;"><img src="{% static 'bootstrap\img\telp.png' %}"></div>
+                                    <div><img src="{% static 'bootstrap\img\flash.png' %}"></div>   
+                                </div>
+                                <div class="rune" style="display: flex; flex-direction: column; align-items: center;">
+                                    <div style="width: 25px; height: 25px; background-color: #000; border-radius: 50%;margin-bottom: 3px;"><img src="{% static 'bootstrap\img\rune2.png' %}"></div>
+                                    <div style="width: 25px; height: 25px; background-color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center;"><img src="{% static 'bootstrap\img\rune1.png' %}"></div>
+                                </div>
+                            </div>
+                            <div style="width: 90px; height: 50px; align-items: center; justify-content: center; display: flex;flex-direction: column;">
+                                <div style="font-size: 16px; color: #A0A0A0; font-weight: bold;"> 5 / 0 / 3</div>
+                                <div style="font-size: 13px; color: #A0A0A0; font-weight: bold;"> PerFect 평 점 </div>
+                            </div>
+                        </div>
+                        <!-- 아이템 정보 -->
+                        <div style="width: 210px; height: 30px; display: flex; justify-content: space-between; align-items: center;">
+                            <div class="score_item"><img src="{% static 'bootstrap\img\item1.png' %}" alt="item1"></div>
+                            <div class="score_item"><img src="{% static 'bootstrap\img\item2.png' %}" alt="item1"></div>
+                            <div class="score_item"><img src="{% static 'bootstrap\img\item2.png' %}" alt="item1"></div>
+                            <div class="score_item"><img src="{% static 'bootstrap\img\item3.png' %}" alt="item1"></div>
+                            <div class="score_item"><img src="{% static 'bootstrap\img\item4.png' %}" alt="item1"></div>
+                            <div class="score_item"><img src="{% static 'bootstrap\img\item5.png' %}" alt="item1"></div>
+                            <div class="score_item"><img src="{% static 'bootstrap\img\item6.png' %}" alt="item1"></div>
+                        </div>
+                    </div>
+                    <div class="kda_box_score">
+                        <div class="kda_box_font">킬관여 62%</div>
+                        <div class="kda_box_font">제어 와드2</div>
+                        <div class="kda_box_font">CS 161 (9.8)</div>
+                        <div class="kda_box_font">Grandmaster</div>
+                    </div>
+                    <div class="kda_box_champ">
+                        <div class="champ_box_left">
+                            <div class="champ_name"><img src="{% static 'bootstrap\img\champ.png' %}" alt="champ" width="15px" height="15px" style="margin-right: 3px;">꼬징어</div>
+                            <div class="champ_name"><img src="{% static 'bootstrap\img\champ.png' %}" alt="champ" width="15px" height="15px" style="margin-right: 3px;">Radiohead</div>
+                            <div class="champ_name"><img src="{% static 'bootstrap\img\champ.png' %}" alt="champ" width="15px" height="15px" style="margin-right: 3px;">Hide on bush</div>
+                            <div class="champ_name"><img src="{% static 'bootstrap\img\champ.png' %}" alt="champ" width="15px" height="15px" style="margin-right: 3px;">미스포츈외길인생</div>
+                            <div class="champ_name"><img src="{% static 'bootstrap\img\champ.png' %}" alt="champ" width="15px" height="15px" style="margin-right: 3px;">Chu성훈</div>
+                        </div>
+                        <div class="champ_box_right">
+                            <div class="champ_name">꼬징어<img src="{% static 'bootstrap\img\champ.png' %}" alt="champ" width="15px" height="15px" style="margin-left: 3px;"></div>
+                            <div class="champ_name">Radiohead<img src="{% static 'bootstrap\img\champ.png' %}" alt="champ" width="15px" height="15px" style="margin-left: 3px;"></div>
+                            <div class="champ_name">Hide on bush<img src="{% static 'bootstrap\img\champ.png' %}" alt="champ" width="15px" height="15px" style="margin-left: 3px;"></div>
+                            <div class="champ_name">미스포츈외길인생<img src="{% static 'bootstrap\img\champ.png' %}" alt="champ" width="15px" height="15px" style="margin-left: 3px;"></div>
+                            <div class="champ_name">Chu성훈<img src="{% static 'bootstrap\img\champ.png' %}" alt="champ" width="15px" height="15px" style="margin-left: 3px;"></div>
+                        </div>
+                    </div>
+                    <button class="accordion_win_btn"></button>
+                </div>
+
+                <!-- 아코디언 표시 (상세 게임 내용) -->
+                <div class="accordion-content">
+                   <div style="width: 740px ; height: 475px; display: flex; flex-direction: column;">
+                    <!-- 상단 항목 줄 -->
+                        <div style="width: 100%; height: 40px; border-top-left-radius:10px ; border-top-right-radius: 10px; background-color: #fff; display: flex;justify-content: space-evenly;">
+                            <div style="width: 180px; height: 100%; display: flex ; align-items: center; color: #A0A0A0; font-weight: bolder; font-size: 14px;"> <strong style="color: #00BBA3;">승리</strong> (블루팀) </div>
+                            <div style="width: 80px ;height: 100%; display: flex ; align-items: center; justify-content: center; font-size: 15px; color: #A0A0A0; font-weight: bolder;">트롤 점수</div>
+                            <div style="width: 107px ;height: 100%; display: flex ; align-items: center; justify-content: center; color: #A0A0A0; font-weight: bolder; font-size: 14px;">KDA</div>
+                            <div style="width: 63p; height: 100%;display: flex ; align-items: center; justify-content: center; color: #A0A0A0; font-weight: bolder; font-size: 14px;">와드</div>
+                            <div style="width: 80px; height: 100%;display: flex ; align-items: center; justify-content: center; color: #A0A0A0; font-weight: bolder; font-size: 14px;">CS</div>
+                            <div style="width: 220px; height: 100%;display: flex ; align-items: center; justify-content: center; color: #A0A0A0; font-weight: bolder; font-size: 14px;">아이템</div>
+                        </div>
+
+                        <!-- 루프 돌릴 부분 -->
+                        <!-- 게임 챔피언 및 아이템 정보 -->
+                            <div style="width: 100%; height: 40px; background-color: #F5FEFB; display: flex;justify-content: space-evenly;">
+                                <!-- 챔피언 정보 및 룬스펠 정보 -->
+                                <div style="width: 180px; height: 100%; display: flex ; align-items: center; ">
+                                    <div style="width: 30px; height: 30px; border-radius: 50%; margin-right: 2px;">
+                                        <img src="{% static 'images/score_champ.png' %}">
+                                    </div>
+                                    <div style="width: 30px; height: 30px; display: flex; align-items: center; justify-content: space-around;">
+                                        <div style="display: flex; flex-direction: column;  align-items: center; justify-content: space-around;">
+                                            <div style="padding-bottom: 2px; width: 14px; height: 14px; display: flex ; align-items: center; justify-content: center;"><img src="{% static 'bootstrap\img\telp.png' %}" width="14px" height="14px"></div>
+                                            <div style="width: 14px; height: 14px; display: flex ; align-items: center; justify-content: center;"><img src="{% static 'bootstrap\img\flash.png' %} " width="14px" height="14px"></div>   
+                                        </div>
+                                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: space-around;">
+                                            <div style="width: 14px; height: 14px; background-color: #000; border-radius: 50%; padding-bottom: 2px; display: flex; align-items: center; justify-content: center;"><img src="{% static 'bootstrap\img\rune2.png' %}" width="14px" height="14px"></div>
+                                            <div style="width: 14px; height: 14px; background-color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center;"><img src="{% static 'bootstrap\img\rune1.png' %}"  width="14px" height="14px"></div>
+                                        </div>
+                                    </div>
+                                    <div style="width: 100%; height: 100%; align-items: center; flex-direction: column; padding-left: 12px;">
+                                        <div style="font-size:14px; font-weight: bolder;">꼬집어</div>
+                                        <div class="kda_box_font">Grandmaster</div>
+                                    </div>
+                                </div>
+                                <!-- 트롤점수 및 등수 -->
+                                <div style="width: 80px ;height: 100%; display: flex ; align-items: center; justify-content: center; font-weight: boloder; font-size: 14px;">5.4</div>
+                                <!-- KDA -->
+                                <div style="width: 107px ;height: 100%; display: flex ; align-items: center; justify-content: center; flex-direction: column;">
+                                    <div class="kda_box_font"> 3/1/1 <!--킬관여율--> (15%)</div>
+                                    <div class="kda_box_font"> <!-- k+a / d --> 4.00:1 평점</div>
+                                </div>
+                                <!-- 시야점수 -->
+                                <div style="width: 63p; height: 100%;display: flex ; align-items: center; justify-content: center; flex-direction: column;">
+                                    <div class="kda_box_font">0</div>
+                                    <div class="kda_box_font">5 / 0</div>
+                                </div>
+                                <!-- CS -->
+                                <div style="width: 80px; height: 100%;display: flex ; align-items: center; justify-content: center; flex-direction: column;">
+                                    <div class="kda_box_font">119</div>
+                                    <div class="kda_box_font">분당 7.2</div>
+                                </div>
+                                <!-- 아이템정보 -->
+                                <div style="width: 220px; height: 100%;display: flex ; align-items: center; justify-content: center;">
+                                    <div style="width: 210px; height: 30px; display: flex; justify-content: space-between; align-items: center;">
+                                        <div class="score_item"><img src="{% static 'bootstrap\img\item1.png' %}" alt="item1"></div>
+                                        <div class="score_item"><img src="{% static 'bootstrap\img\item6.png' %}" alt="item6"></div>
+                                        <div class="score_item"></div>
+                                        <div class="score_item"><img src="{% static 'bootstrap\img\item3.png' %}" alt="item3"></div>
+                                        <div class="score_item"><img src="{% static 'bootstrap\img\item4.png' %}" alt="item4"></div>
+                                        <div class="score_item"><img src="{% static 'bootstrap\img\item5.png' %}" alt="item5"></div>
+                                        <div class="score_item"><img src="{% static 'bootstrap\img\item2.png' %}" alt="item2"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        <!-- 여기까지 루프 -->
+
+                        <!-- 패배팀 루프 -->
+                        <div style="width: 100%; height: 40px; background-color: #fff; display: flex;justify-content: space-evenly;">
+                            <div style="width: 180px; height: 100%; display: flex ; align-items: center; color: #A0A0A0; font-weight: bolder; font-size: 14px;"> <strong style="color: #D31A45;">패배</strong> (레드팀) </div>
+                            <div style="width: 80px ;height: 100%; display: flex ; align-items: center; justify-content: center; font-size: 15px; color: #A0A0A0; font-weight: bolder;">트롤 점수</div>
+                            <div style="width: 107px ;height: 100%; display: flex ; align-items: center; justify-content: center; color: #A0A0A0; font-weight: bolder; font-size: 14px;">KDA</div>
+                            <div style="width: 63p; height: 100%;display: flex ; align-items: center; justify-content: center; color: #A0A0A0; font-weight: bolder; font-size: 14px;">와드</div>
+                            <div style="width: 80px; height: 100%;display: flex ; align-items: center; justify-content: center; color: #A0A0A0; font-weight: bolder; font-size: 14px;">CS</div>
+                            <div style="width: 220px; height: 100%;display: flex ; align-items: center; justify-content: center; color: #A0A0A0; font-weight: bolder; font-size: 14px;">아이템</div>
+                        </div>
+                        <!-- 패배팀 정보창 -->
+                        <div style="width: 100%; height: 40px; background-color: #FFF6F7; display: flex;justify-content: space-evenly;">
+                            <!-- 챔피언 정보 및 룬스펠 정보 -->
+                            <div style="width: 180px; height: 100%; display: flex ; align-items: center; ">
+                                <div style="width: 30px; height: 30px; border-radius: 50%; margin-right: 2px;">
+                                    <img src="{% static 'images/score_champ.png' %}">
+                                </div>
+                                <div style="width: 30px; height: 30px; display: flex; align-items: center; justify-content: space-around;">
+                                    <div style="display: flex; flex-direction: column;  align-items: center; justify-content: space-around;">
+                                        <div style="padding-bottom: 2px; width: 14px; height: 14px; display: flex ; align-items: center; justify-content: center;"><img src="{% static 'bootstrap\img\telp.png' %}" width="14px" height="14px"></div>
+                                        <div style="width: 14px; height: 14px; display: flex ; align-items: center; justify-content: center;"><img src="{% static 'bootstrap\img\flash.png' %} " width="14px" height="14px"></div>   
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: space-around;">
+                                        <div style="width: 14px; height: 14px; background-color: #000; border-radius: 50%; padding-bottom: 2px; display: flex; align-items: center; justify-content: center;"><img src="{% static 'bootstrap\img\rune2.png' %}" width="14px" height="14px"></div>
+                                        <div style="width: 14px; height: 14px; background-color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center;"><img src="{% static 'bootstrap\img\rune1.png' %}"  width="14px" height="14px"></div>
+                                    </div>
+                                </div>
+                                <div style="width: 100%; height: 100%; align-items: center; flex-direction: column; padding-left: 12px;">
+                                    <div style="font-size:14px; font-weight: bolder;">꼬집어</div>
+                                    <div class="kda_box_font">Grandmaster</div>
+                                </div>
+                            </div>
+                            <!-- 트롤점수 및 등수 -->
+                            <div style="width: 80px ;height: 100%; display: flex ; align-items: center; justify-content: center; font-weight: boloder; font-size: 14px;">5.4</div>
+                            <!-- KDA -->
+                            <div style="width: 107px ;height: 100%; display: flex ; align-items: center; justify-content: center; flex-direction: column;">
+                                <div class="kda_box_font"> 3/1/1 <!--킬관여율--> (15%)</div>
+                                <div class="kda_box_font"> <!-- k+a / d --> 4.00:1 평점</div>
+                            </div>
+                            <!-- 시야점수 -->
+                            <div style="width: 63p; height: 100%;display: flex ; align-items: center; justify-content: center; flex-direction: column;">
+                                <div class="kda_box_font">0</div>
+                                <div class="kda_box_font">5 / 0</div>
+                            </div>
+                            <!-- CS -->
+                            <div style="width: 80px; height: 100%;display: flex ; align-items: center; justify-content: center; flex-direction: column;">
+                                <div class="kda_box_font">119</div>
+                                <div class="kda_box_font">분당 7.2</div>
+                            </div>
+                            <!-- 아이템정보 -->
+                            <div style="width: 220px; height: 100%;display: flex ; align-items: center; justify-content: center;">
+                                <div style="width: 210px; height: 30px; display: flex; justify-content: space-between; align-items: center;">
+                                    <div class="score_item"><img src="{% static 'bootstrap\img\item1.png' %}" alt="item1"></div>
+                                    <div class="score_item"><img src="{% static 'bootstrap\img\item6.png' %}" alt="item6"></div>
+                                    <div class="score_item"></div>
+                                    <div class="score_item"><img src="{% static 'bootstrap\img\item3.png' %}" alt="item3"></div>
+                                    <div class="score_item"><img src="{% static 'bootstrap\img\item4.png' %}" alt="item4"></div>
+                                    <div class="score_item"><img src="{% static 'bootstrap\img\item5.png' %}" alt="item5"></div>
+                                    <div class="score_item"><img src="{% static 'bootstrap\img\item2.png' %}" alt="item2"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                   </div>
+                </div>
+            </div>
+
+        <div class="my-custom-accordion">
+            <div class="score_box_lose">
+                <div style="width: 90px; height: 70px; display: flex; flex-direction: column;">
+                    <div class="score_lose_font">패배</div>
+                    <div style="font-size: 12px;"> <strong>솔랭</strong> 16:24</div>
+                    <div style="font-size: 12px;">1주일 전</div>
+                </div>
+                <div class="kda_box">
+                    <div style="width: 225px; height: 60px; display: flex; align-items: center;">
+                        <div style="width: 55x; height: 55px; border-radius: 5px;"><img src="{% static 'bootstrap\img\champ.png' %}" width="55px" height="55px"></div>
+                        <div style="display: flex; align-items:center;  width: 60px; height: 60px;">
+                            <div class="spell" style="display: flex; flex-direction: column; justify-content: space-around; padding: 5px;">
+                                <div style="padding-bottom: 3px;"><img src="{% static 'bootstrap\img\telp.png' %}"></div>
+                                <div><img src="{% static 'bootstrap\img\flash.png' %}"></div>   
+                            </div>
+                            <div class="rune" style="display: flex; flex-direction: column; align-items: center;">
+                                <div style="width: 25px; height: 25px; background-color: #000; border-radius: 50%;margin-bottom: 3px;"><img src="{% static 'bootstrap\img\rune2.png' %}"></div>
+                                <div style="width: 25px; height: 25px; background-color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center;"><img src="{% static 'bootstrap\img\rune1.png' %}"></div>
+                            </div>
+                        </div>
+                        <div style="width: 90px; height: 50px; align-items: center; justify-content: center; display: flex;flex-direction: column;">
+                            <div style="font-size: 16px; color: #A0A0A0; font-weight: bold;"> 5 / 0 / 3</div>
+                            <div style="font-size: 13px; color: #A0A0A0; font-weight: bold;"> PerFect 평 점 </div>
+                        </div>
+                    </div>
+                    <!-- 아이템 정보 -->
+                    <div style="width: 210px; height: 30px; display: flex; justify-content: space-between; align-items: center;">
+                        <div class="score_item"><img src="{% static 'bootstrap\img\item1.png' %}" alt="item1"></div>
+                        <div class="score_item"><img src="{% static 'bootstrap\img\item2.png' %}" alt="item1"></div>
+                        <div class="score_item"><img src="{% static 'bootstrap\img\item2.png' %}" alt="item1"></div>
+                        <div class="score_item"><img src="{% static 'bootstrap\img\item3.png' %}" alt="item1"></div>
+                        <div class="score_item"><img src="{% static 'bootstrap\img\item4.png' %}" alt="item1"></div>
+                        <div class="score_item"><img src="{% static 'bootstrap\img\item5.png' %}" alt="item1"></div>
+                        <div class="score_item"><img src="{% static 'bootstrap\img\item6.png' %}" alt="item1"></div>
+                    </div>
+                </div>
+                <div class="kda_box_score">
+                    <div class="kda_box_font">킬관여 62%</div>
+                    <div class="kda_box_font">제어 와드2</div>
+                    <div class="kda_box_font">CS 161 (9.8)</div>
+                    <div class="kda_box_font">Grandmaster</div>
+                </div>
+                <div class="kda_box_champ">
+                    <div class="champ_box_left">
+                        <div class="champ_name"><img src="{% static 'bootstrap\img\champ.png' %}" alt="champ" width="15px" height="15px" style="margin-right: 3px;">꼬징어</div>
+                        <div class="champ_name"><img src="{% static 'bootstrap\img\champ.png' %}" alt="champ" width="15px" height="15px" style="margin-right: 3px;">Radiohead</div>
+                        <div class="champ_name"><img src="{% static 'bootstrap\img\champ.png' %}" alt="champ" width="15px" height="15px" style="margin-right: 3px;">Hide on bush</div>
+                        <div class="champ_name"><img src="{% static 'bootstrap\img\champ.png' %}" alt="champ" width="15px" height="15px" style="margin-right: 3px;">미스포츈외길인생</div>
+                        <div class="champ_name"><img src="{% static 'bootstrap\img\champ.png' %}" alt="champ" width="15px" height="15px" style="margin-right: 3px;">Chu성훈</div>
+                    </div>
+                    <div class="champ_box_right">
+                        <div class="champ_name">꼬징어<img src="{% static 'bootstrap\img\champ.png' %}" alt="champ" width="15px" height="15px" style="margin-left: 3px;"></div>
+                        <div class="champ_name">Radiohead<img src="{% static 'bootstrap\img\champ.png' %}" alt="champ" width="15px" height="15px" style="margin-left: 3px;"></div>
+                        <div class="champ_name">Hide on bush<img src="{% static 'bootstrap\img\champ.png' %}" alt="champ" width="15px" height="15px" style="margin-left: 3px;"></div>
+                        <div class="champ_name">미스포츈외길인생<img src="{% static 'bootstrap\img\champ.png' %}" alt="champ" width="15px" height="15px" style="margin-left: 3px;"></div>
+                        <div class="champ_name">Chu성훈<img src="{% static 'bootstrap\img\champ.png' %}" alt="champ" width="15px" height="15px" style="margin-left: 3px;"></div>
+                    </div>
+                </div>
+                <button class="accordion_lose_btn"></button>
+            </div>
+                            <!-- 아코디언 표시 (상세 게임 내용) -->
+                            <div class="accordion-content">
+                                <div style="width: 740px ; height: 475px; display: flex; flex-direction: column;">
+                                 <!-- 상단 항목 줄 -->
+                                     <div style="width: 100%; height: 40px; border-top-left-radius:10px ; border-top-right-radius: 10px; background-color: #fff; display: flex;justify-content: space-evenly;">
+                                         <div style="width: 180px; height: 100%; display: flex ; align-items: center; color: #A0A0A0; font-weight: bolder; font-size: 14px;"> <strong style="color: #00BBA3;">승리</strong> (블루팀) </div>
+                                         <div style="width: 80px ;height: 100%; display: flex ; align-items: center; justify-content: center; font-size: 15px; color: #A0A0A0; font-weight: bolder;">트롤 점수</div>
+                                         <div style="width: 107px ;height: 100%; display: flex ; align-items: center; justify-content: center; color: #A0A0A0; font-weight: bolder; font-size: 14px;">KDA</div>
+                                         <div style="width: 63p; height: 100%;display: flex ; align-items: center; justify-content: center; color: #A0A0A0; font-weight: bolder; font-size: 14px;">와드</div>
+                                         <div style="width: 80px; height: 100%;display: flex ; align-items: center; justify-content: center; color: #A0A0A0; font-weight: bolder; font-size: 14px;">CS</div>
+                                         <div style="width: 220px; height: 100%;display: flex ; align-items: center; justify-content: center; color: #A0A0A0; font-weight: bolder; font-size: 14px;">아이템</div>
+                                     </div>
+             
+                                     <!-- 루프 돌릴 부분 -->
+                                     <!-- 게임 챔피언 및 아이템 정보 -->
+                                         <div style="width: 100%; height: 40px; background-color: #F5FEFB; display: flex;justify-content: space-evenly;">
+                                             <!-- 챔피언 정보 및 룬스펠 정보 -->
+                                             <div style="width: 180px; height: 100%; display: flex ; align-items: center; ">
+                                                 <div style="width: 30px; height: 30px; border-radius: 50%; margin-right: 2px;">
+                                                     <img src="{% static 'images/score_champ.png' %}">
+                                                 </div>
+                                                 <div style="width: 30px; height: 30px; display: flex; align-items: center; justify-content: space-around;">
+                                                     <div style="display: flex; flex-direction: column;  align-items: center; justify-content: space-around;">
+                                                         <div style="padding-bottom: 2px; width: 14px; height: 14px; display: flex ; align-items: center; justify-content: center;"><img src="{% static 'bootstrap\img\telp.png' %}" width="14px" height="14px"></div>
+                                                         <div style="width: 14px; height: 14px; display: flex ; align-items: center; justify-content: center;"><img src="{% static 'bootstrap\img\flash.png' %} " width="14px" height="14px"></div>   
+                                                     </div>
+                                                     <div style="display: flex; flex-direction: column; align-items: center; justify-content: space-around;">
+                                                         <div style="width: 14px; height: 14px; background-color: #000; border-radius: 50%; padding-bottom: 2px; display: flex; align-items: center; justify-content: center;"><img src="{% static 'bootstrap\img\rune2.png' %}" width="14px" height="14px"></div>
+                                                         <div style="width: 14px; height: 14px; background-color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center;"><img src="{% static 'bootstrap\img\rune1.png' %}"  width="14px" height="14px"></div>
+                                                     </div>
+                                                 </div>
+                                                 <div style="width: 100%; height: 100%; align-items: center; flex-direction: column; padding-left: 12px;">
+                                                     <div style="font-size:14px; font-weight: bolder;">꼬집어</div>
+                                                     <div class="kda_box_font">Grandmaster</div>
+                                                 </div>
+                                             </div>
+                                             <!-- 트롤점수 및 등수 -->
+                                             <div style="width: 80px ;height: 100%; display: flex ; align-items: center; justify-content: center; font-weight: boloder; font-size: 14px;">5.4</div>
+                                             <!-- KDA -->
+                                             <div style="width: 107px ;height: 100%; display: flex ; align-items: center; justify-content: center; flex-direction: column;">
+                                                 <div class="kda_box_font"> 3/1/1 <!--킬관여율--> (15%)</div>
+                                                 <div class="kda_box_font"> <!-- k+a / d --> 4.00:1 평점</div>
+                                             </div>
+                                             <!-- 시야점수 -->
+                                             <div style="width: 63p; height: 100%;display: flex ; align-items: center; justify-content: center; flex-direction: column;">
+                                                 <div class="kda_box_font">0</div>
+                                                 <div class="kda_box_font">5 / 0</div>
+                                             </div>
+                                             <!-- CS -->
+                                             <div style="width: 80px; height: 100%;display: flex ; align-items: center; justify-content: center; flex-direction: column;">
+                                                 <div class="kda_box_font">119</div>
+                                                 <div class="kda_box_font">분당 7.2</div>
+                                             </div>
+                                             <!-- 아이템정보 -->
+                                             <div style="width: 220px; height: 100%;display: flex ; align-items: center; justify-content: center;">
+                                                 <div style="width: 210px; height: 30px; display: flex; justify-content: space-between; align-items: center;">
+                                                     <div class="score_item"><img src="{% static 'bootstrap\img\item1.png' %}" alt="item1"></div>
+                                                     <div class="score_item"><img src="{% static 'bootstrap\img\item6.png' %}" alt="item6"></div>
+                                                     <div class="score_item"></div>
+                                                     <div class="score_item"><img src="{% static 'bootstrap\img\item3.png' %}" alt="item3"></div>
+                                                     <div class="score_item"><img src="{% static 'bootstrap\img\item4.png' %}" alt="item4"></div>
+                                                     <div class="score_item"><img src="{% static 'bootstrap\img\item5.png' %}" alt="item5"></div>
+                                                     <div class="score_item"><img src="{% static 'bootstrap\img\item2.png' %}" alt="item2"></div>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                         
+                                     <!-- 여기까지 루프 -->
+             
+                                     <!-- 패배팀 루프 -->
+                                     <div style="width: 100%; height: 40px; background-color: #fff; display: flex;justify-content: space-evenly;">
+                                         <div style="width: 180px; height: 100%; display: flex ; align-items: center; color: #A0A0A0; font-weight: bolder; font-size: 14px;"> <strong style="color: #D31A45;">패배</strong> (레드팀) </div>
+                                         <div style="width: 80px ;height: 100%; display: flex ; align-items: center; justify-content: center; font-size: 15px; color: #A0A0A0; font-weight: bolder;">트롤 점수</div>
+                                         <div style="width: 107px ;height: 100%; display: flex ; align-items: center; justify-content: center; color: #A0A0A0; font-weight: bolder; font-size: 14px;">KDA</div>
+                                         <div style="width: 63p; height: 100%;display: flex ; align-items: center; justify-content: center; color: #A0A0A0; font-weight: bolder; font-size: 14px;">와드</div>
+                                         <div style="width: 80px; height: 100%;display: flex ; align-items: center; justify-content: center; color: #A0A0A0; font-weight: bolder; font-size: 14px;">CS</div>
+                                         <div style="width: 220px; height: 100%;display: flex ; align-items: center; justify-content: center; color: #A0A0A0; font-weight: bolder; font-size: 14px;">아이템</div>
+                                     </div>
+                                     <!-- 패배팀 정보창 -->
+                                     <div style="width: 100%; height: 40px; background-color: #FFF6F7; display: flex;justify-content: space-evenly;">
+                                         <!-- 챔피언 정보 및 룬스펠 정보 -->
+                                         <div style="width: 180px; height: 100%; display: flex ; align-items: center; ">
+                                             <div style="width: 30px; height: 30px; border-radius: 50%; margin-right: 2px;">
+                                                 <img src="{% static 'images/score_champ.png' %}">
+                                             </div>
+                                             <div style="width: 30px; height: 30px; display: flex; align-items: center; justify-content: space-around;">
+                                                 <div style="display: flex; flex-direction: column;  align-items: center; justify-content: space-around;">
+                                                     <div style="padding-bottom: 2px; width: 14px; height: 14px; display: flex ; align-items: center; justify-content: center;"><img src="{% static 'bootstrap\img\telp.png' %}" width="14px" height="14px"></div>
+                                                     <div style="width: 14px; height: 14px; display: flex ; align-items: center; justify-content: center;"><img src="{% static 'bootstrap\img\flash.png' %} " width="14px" height="14px"></div>   
+                                                 </div>
+                                                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: space-around;">
+                                                     <div style="width: 14px; height: 14px; background-color: #000; border-radius: 50%; padding-bottom: 2px; display: flex; align-items: center; justify-content: center;"><img src="{% static 'bootstrap\img\rune2.png' %}" width="14px" height="14px"></div>
+                                                     <div style="width: 14px; height: 14px; background-color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center;"><img src="{% static 'bootstrap\img\rune1.png' %}"  width="14px" height="14px"></div>
+                                                 </div>
+                                             </div>
+                                             <div style="width: 100%; height: 100%; align-items: center; flex-direction: column; padding-left: 12px;">
+                                                 <div style="font-size:14px; font-weight: bolder;">꼬집어</div>
+                                                 <div class="kda_box_font">Grandmaster</div>
+                                             </div>
+                                         </div>
+                                         <!-- 트롤점수 및 등수 -->
+                                         <div style="width: 80px ;height: 100%; display: flex ; align-items: center; justify-content: center; font-weight: boloder; font-size: 14px;">5.4</div>
+                                         <!-- KDA -->
+                                         <div style="width: 107px ;height: 100%; display: flex ; align-items: center; justify-content: center; flex-direction: column;">
+                                             <div class="kda_box_font"> 3/1/1 <!--킬관여율--> (15%)</div>
+                                             <div class="kda_box_font"> <!-- k+a / d --> 4.00:1 평점</div>
+                                         </div>
+                                         <!-- 시야점수 -->
+                                         <div style="width: 63p; height: 100%;display: flex ; align-items: center; justify-content: center; flex-direction: column;">
+                                             <div class="kda_box_font">0</div>
+                                             <div class="kda_box_font">5 / 0</div>
+                                         </div>
+                                         <!-- CS -->
+                                         <div style="width: 80px; height: 100%;display: flex ; align-items: center; justify-content: center; flex-direction: column;">
+                                             <div class="kda_box_font">119</div>
+                                             <div class="kda_box_font">분당 7.2</div>
+                                         </div>
+                                         <!-- 아이템정보 -->
+                                         <div style="width: 220px; height: 100%;display: flex ; align-items: center; justify-content: center;">
+                                             <div style="width: 210px; height: 30px; display: flex; justify-content: space-between; align-items: center;">
+                                                 <div class="score_item"><img src="{% static 'bootstrap\img\item1.png' %}" alt="item1"></div>
+                                                 <div class="score_item"><img src="{% static 'bootstrap\img\item6.png' %}" alt="item6"></div>
+                                                 <div class="score_item"></div>
+                                                 <div class="score_item"><img src="{% static 'bootstrap\img\item3.png' %}" alt="item3"></div>
+                                                 <div class="score_item"><img src="{% static 'bootstrap\img\item4.png' %}" alt="item4"></div>
+                                                 <div class="score_item"><img src="{% static 'bootstrap\img\item5.png' %}" alt="item5"></div>
+                                                 <div class="score_item"><img src="{% static 'bootstrap\img\item2.png' %}" alt="item2"></div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                     
+                                </div>
+                             </div>
+        </div>
+                       
+        </div>
+    </div>
+</div>
+{% endblock %}

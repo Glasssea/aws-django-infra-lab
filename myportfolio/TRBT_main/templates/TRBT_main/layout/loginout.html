@@ -1,0 +1,8 @@
+
+
+{% if user.is_authenticated %}
+    <a href="/user" class="btn navlink">{{user}}</a><a href ="{% url 'user:logout' %}" class="btn navlink">로그아웃</a>
+{% else %}
+    <a href ="/user/login" class="btn navlink">로그인</a>
+    <a href ="/user/register/" class="btn navlink">회원가입</a>
+{% endif %}

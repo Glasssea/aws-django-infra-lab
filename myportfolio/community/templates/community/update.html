@@ -1,0 +1,61 @@
+{% extends "community/base.html" %}
+{% load static %}
+{% block main %}
+<div class="container">
+ <div class="mt-5 contents-wrap">
+    {% if user.is_authenticated %}
+    {% if user.username != article.user.username %}
+  <p>잘못된 접근방법 입니다.</p>
+    {% else %}
+  <h3 class="nav-loc">
+   글 작성
+  </h3>
+
+  <div class="container">
+   <div class="contents">
+    <form action="{% url 'community:update' article.id %}" method="POST">
+        {% csrf_token %}
+        <div class="board-header p-3 mb-3">
+            <label for="title" class="form-label">글 제목</label>
+            <select id="category_id" name="category_id">
+                {% if user.is_superuser %}
+                <option value=1>공지사항</option>
+                    {%endif%}
+                {% for category in category_list %}
+                {% if category.category_name != 'notice' %}
+                <option value={{category.id}} {% if article and category.id == article.category_id_id %}selected{% endif %}>{{category.category_name}}</option>
+                {% endif %}
+                {% endfor%}
+            </select>    
+            <input type="text" name="title" class="form-control" id="title" placeholder="글 제목을 입력해주세요." value="{% if article %}{{ article.title }}{% endif %}">
+            <div id="content-help" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+        <div class="board-content p-3 mb-3">
+        <label for="content" class="form-label">내용</label>
+        <textarea class="form-control" name="content" id="content" rows="10">{% if article %}{{ article.content }}{% endif %}</textarea>
+        <div id="content-help" class="form-text">We'll never share your email with anyone else.</div>
+        </div>
+        <div class="mb-3 p-3">
+            <div style="float:right">
+                <input type="hidden" id="user" name="user" value={{ user.id }}>
+                <input type="hidden" id="id" name="id" value={{ article.id }}>
+                <h4>{{article.id}}</h4>
+
+                {% if article %}
+                <button type="submit" class="btn btn-outline-success">수정</button>
+                {% else %}
+                <button type="submit" class="btn btn-outline-success">작성</button>
+                {% endif %}
+            </div>
+        </div>
+    </form>
+   </div>
+  </div>
+  {% endif %}
+  {% else %}
+  <p>글을 수정하려면 <a href="/user/login">로그인</a>을 해주세요.</p>
+  {% endif %}
+  
+ </div>
+</div>
+{% endblock %}

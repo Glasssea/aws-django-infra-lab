@@ -1,0 +1,57 @@
+<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="position:absolute; left:0px; top:90px; width: 200px;">
+    
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+            <a href="{% url 'community:index' %}" class="nav-link text-white" aria-current="page">
+              <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+              home
+            </font></font></a>
+          </li>
+        {% for category in category_list %}
+        <li class="nav-item">
+        <a href="{{category.id}}" class="nav-link text-white" aria-current="page">
+          <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+            {{category.category_name}}
+        </font></font></a>
+    </li>
+    {% endfor%}
+        
+      <li>
+        <a href="" class="nav-link text-white">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+          
+        </font></font></a>
+      </li>
+      <li>
+        <a href="" class="nav-link text-white">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+          명령
+        </font></font></a>
+      </li>
+      <li>
+        <a href="" class="nav-link text-white">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+          제품
+        </font></font></a>
+      </li>
+      <li>
+        <a href="https://getbootstrap.com/docs/5.0/examples/sidebars/#" class="nav-link text-white">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+          고객
+        </font></font></a>
+      </li>
+    </ul>
+    <hr>
+    <div class="dropdown">
+      <a href="" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+        <strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{user}}</font></font></strong>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+        <li><a class="dropdown-item" href=""><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">새 프로젝트...</font></font></a></li>
+        <li><a class="dropdown-item" href=""><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">설정</font></font></a></li>
+        <li><a class="dropdown-item" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">프로필</font></font></a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href=""><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">로그아웃</font></font></a></li>
+      </ul>
+    </div>
+  </div>

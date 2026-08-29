@@ -1,0 +1,17 @@
+
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div style="height: 180px;"></div>
+<div id="Contact">
+    <div class="d-flex flex-column align-items-center">
+        <img src={% static "images/IDphoto.jpeg"%} width=200px;>
+        <div>윤성찬.</div>
+        <div>010.5044.1108</div>
+        <div>dbsdbs17@gmail.com</div>
+        <img id="QR" src={% static "images/QR.png" %} width=200px;>
+    </div>
+</div>
+{% endblock %}

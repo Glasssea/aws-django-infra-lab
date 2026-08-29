@@ -1,0 +1,38 @@
+{% extends "TRBT_main/base.html" %}
+{% block content %}
+<div class="container">
+ <style>
+       .nav-loc {
+           color: #8b8b8b;
+       }
+ </style>
+ <div class="mt-5 contents-wrap">
+  <h3 class="nav-loc">
+   회원가입
+  </h3>
+
+  <div class="container">
+   <div class="contents">
+    <form action="{% url "user:register" %}" method="POST">
+     {% csrf_token %}
+
+     {% for field in form %}
+      <div class="fieldWrapper m-2 my-4">
+       {{ field.label_tag }} {{ field }}
+       {% for error in field.errors %}
+        <div id="content-help" class="form-text text-danger">{{ error }}</div>
+       {% endfor %}
+      </div>
+     {% endfor %}
+
+     <div class="mb-3 p-3">
+      <div style="float:right">
+       <button type="submit" class="btn btn-outline-success">회원가입</button>
+      </div>
+     </div>
+    </form>
+   </div>
+  </div>
+ </div>
+</div>
+{% endblock %}

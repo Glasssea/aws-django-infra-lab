@@ -1,0 +1,434 @@
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}
+
+main>.container {
+    padding: 60px 15px 0;
+}
+div>.logo{
+    background-image: url("{% static 'images/image3.jpg' %}");
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 600px;
+    height: 200px;
+}
+div>.ad{   
+    width: 800px;
+    height: 300px;
+    /* identical to box height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.navlink{
+    text-align: center;
+    color: #ffffff;
+    font-size: medium;
+    text-decoration: none;
+    font-weight: bolder;
+}
+.calink{
+    text-align: start;
+    color: black;
+    text-decoration: none;
+    font-weight: 900;
+    font-size: 16px;
+    margin-left: 10px;
+    padding-top: 8px ;
+    width: 120px;
+    
+}
+.buttons{
+    cursor: pointer !important;
+}
+.mean_btn{
+    width: 80px;
+    height: 20px;
+
+    font-style: normal;
+    font-weight: 800;
+    font-size: 10px;
+    line-height: 15px;
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color:#ffffff;
+}
+.nav_box{
+    width: 1080px;
+    height: 80px;
+}
+.nav_font{
+    font-weight: 600;
+    font-size: 24px;
+}
+.align-center{
+    display:flex;
+    align-items:center;
+}
+.cabox{
+    width: 1080px;
+    height: 40px;
+    background-color: #fff;
+    margin-top: 2px;
+    align-items: center;
+}
+.active{
+    width: 80px;
+    height: 20px;
+    border-radius: 10px;
+    font-style: normal;
+    font-weight: bolder;
+    font-size: 12px;
+    line-height: 15px;
+    margin-top: -5px;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    color: #fff;
+    background-color: #508484;
+}
+.meanbtn{
+    width: 80px;
+    height: 20px;
+    border-radius: 10px;
+    font-style: normal;
+    font-weight: bolder;
+    font-size: 12px;
+    line-height: 15px;
+    margin-top: -5px;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    color: black;
+    background-color: #f5f5f5;
+}
+.pitems{
+    width: 100%; 
+    height: 40px; 
+    display: flex;
+    justify-content: center;
+    text-align: center; 
+    align-items: center; 
+    margin-left: 5px;
+    font-size: 14px;
+    font-weight: bolder;
+    text-decoration: none !important;
+    color:#000 !important;
+}
+.meanchamp{
+    width: 20px;
+    height: 20px; 
+    align-self: center; 
+    justify-self: start; 
+    display: flex; 
+    margin-left: 5px;
+}
+#progress {
+    width: 180%;
+    height: 20px;
+    appearance: none;
+    align-self: center;
+}
+#progress::-webkit-progress-bar {
+    background:#f5f5f5;
+    box-shadow: inset 3px 3px 10px #ccc;
+}
+#progress::-webkit-progress-value {
+    background: #508484;
+}
+
+
+/* 전적검색 bar */
+
+.progress-bar-vertical {
+    width: 20px;
+    min-height: 70px;
+    margin-right: 10px;
+    float: left;
+    display: -webkit-box;  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+    display: -ms-flexbox;  /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+    display: flex;         /* NEW, Spec - Firefox, Chrome, Opera */
+    align-items: flex-end;
+    -webkit-align-items: flex-end; /* Safari 7.0+ */
+    border-radius: 0%;
+  }
+  
+  .progress-bar-vertical .progress-bar {
+    width: 100%;
+    height: 0;
+    -webkit-transition: height 0.6s ease;
+    -o-transition: height 0.6s ease;
+    transition: height 0.6s ease;
+    background-color: #00BBA3;
+  }
+
+#playCountBtn{
+    cursor: pointer;
+}
+.sort{
+    font-weight: 900;
+    background-color: #E5F0F0;
+    
+}
+.borderTop{
+    border-top:3px solid #000;
+}
+.borderBottom{
+    border-bottom:3px solid #000;
+}
+.borderBottomNone{
+    border-bottom:none
+}
+.borderTopNone{
+    border-Top:none
+}
+.rankCategory{
+    width: 1080 px;
+    height: 40px;
+    border-radius: 15px; 
+    align-items: center;
+    background-color: #E6F1F0; 
+}
+.rankBox{
+    width: 1080px;
+    height: 40px;
+    border-top-left-radius: 15px; 
+    border-top-right-radius: 15px; 
+    background-color: #E6F1F0; 
+    align-items: center;
+}
+.rankBoxBtn{
+    text-decoration: none !important;
+    color:#000 !important;
+    width: 100%; 
+    align-items: center; 
+    height: 40px; 
+    justify-content: start; 
+    display: flex; 
+    margin-left: 5px;
+}
+
+
+/*도넛*/
+
+.pie {
+    --w:70px;
+    
+    width: var(--w);
+    aspect-ratio: 1;
+    position: relative;
+    display: inline-grid;
+    place-content: center;
+    margin: 5px;
+    font-size: 12px;
+    font-weight: bolder;
+    font-family: sans-serif;
+    
+  }
+  .pie:before {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    inset: 0;
+    background: conic-gradient(var(--c) calc(var(--p)*1%),#0000 0);
+    -webkit-mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+            mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+  }
+
+
+  /** search **/
+
+  .search_top{
+    display: flex; 
+    width: 260px ;
+    height:128px; 
+    flex-direction: column; 
+    margin-right: -15px;
+    position: relative;
+  }
+  .search_top:after {
+    content: '';
+    height: 80%; 
+    width: 2px;
+    
+    position: absolute;
+    right: 0;
+    top: 15px;
+    
+    background-color: #d5d5d5;
+  }
+
+  .search_rank{
+    display: flex;
+    width: 120px; 
+    height: 20px ; 
+    background-color: #f5f5f5; 
+    border-radius: 5px; 
+    align-items: center;
+    justify-content: center; 
+    margin-right: 10px; 
+    font-size: 12px;
+    font-weight: bold;
+    color: #A0A0A0;
+  }
+  .search_rank_box{
+    display: flex; 
+    align-items: center; 
+    width: 140px; 
+    height: 40px;
+    margin-right: -10px;
+  }
+  .search_rank_btn{
+    width: 100px; 
+    height: 30px; 
+    background-color: #508484; 
+    color: #fff; 
+    border-radius: 10px; 
+    border:none
+  }
+  .score_box_win{
+    display: flex; 
+    width: 100%; 
+    height: 105px; 
+    background-color: #F5FEFB; 
+    border-radius: 10px; 
+    border-left:solid 6.5px #00BBA3;
+    margin-top: 20px;
+    padding: 10px;
+    position: relative;
+  }
+  .score_win_font{
+    margin-bottom: 8px; 
+    font-size: 16px; 
+    color: #02BDA5; 
+    font-weight: bolder;
+  }
+  .score_lose_font{
+    margin-bottom: 8px; 
+    font-size: 16px; 
+    color: #D31A45; 
+    font-weight: bolder;
+  }
+  .score_box_lose{
+    display: flex; 
+    width: 100%; 
+    height: 105px; 
+    background-color: #FFF6F7; 
+    border-radius: 10px; 
+    border-left:solid 6.5px #D31A45;
+    margin-top: 20px;
+    padding: 10px;
+    position: relative;
+  }
+  .kda_box{
+    width: 225px; 
+    height: 90px; 
+    display: flex; 
+    flex-direction: column;
+    position: relative;
+  }
+  .kda_box::after {
+    content: '';
+    height: 90%; 
+    width: 2px;
+    
+    position: absolute;
+    right: 0;
+    top: 6px;
+    
+    background-color: #d5d5d5;
+  }
+  .kda_box_score{
+    width: 160px; 
+    height: 90px; 
+    display: flex; 
+    flex-direction: column;
+    padding: 10px;
+    padding-top: 0px;
+  }
+  .kda_box_font{
+    font-size:8px;
+    color:#A0A0A0;
+    font-weight: bold;
+  }
+  .score_item{
+    width: 25px; 
+    height: 25px; 
+    border-radius: 5px; 
+    background-color: #D3DCE9;
+  }
+  .kda_box_champ{
+    width: 200px;
+    height: 90px;
+    display: flex;
+  }
+  .champ_box_left{
+    width: 100px;
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  .champ_box_right{
+    width: 100px;
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items:end
+  }
+  .champ_name{
+    font-size: 8px;
+    color: #A0A0A0;
+    font-weight: bolder;
+  }
+
+  .accordion-content {
+    display: none;
+    margin-top: 20px;
+  }
+  
+  .accordion_active{
+    display: block;
+    margin-top: 20px;
+  }
+  .accordion_win_btn{
+    width: 30px;
+    height: 100%;
+    background-color: #CCF0E6;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  .accordion_lose_btn{
+    width: 30px;
+    height: 100%;
+    background-color: #FBDDDD;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }

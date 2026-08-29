@@ -1,0 +1,12 @@
+/* Custom styles */
+body {
+    
+    padding-top: 60px;  /* Adjust based on the actual height of your header */
+    
+  }
+  .fixed-top {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1030; /* Bootstrap z-index for fixed elements is generally 1030 */
+}

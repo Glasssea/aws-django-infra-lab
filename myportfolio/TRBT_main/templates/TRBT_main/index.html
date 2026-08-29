@@ -1,0 +1,37 @@
+{% extends "TRBT_main/base.html" %}
+{% load static %}
+{% block main %}
+
+<div style="position: absolute; top: 140px; right: 250px; z-index: 0;"> <!-- z-index를 0으로 설정 -->
+    <img src="{% static 'images/image 3.png' %}">
+</div>
+<div class="container" style="z-index: 99;">
+    <div class="d-flex justify-content-center" style="margin-top: 200px; margin-bottom: 100px;">
+        <img src="{% static 'images/logo.png' %}" alt="로고">
+    </div>
+
+    <div class="justify-content-center d-flex">
+        <form class="d-flex" method="POST" action="{% url 'search:search' nickname='some_nickname' %}">
+            {% csrf_token %}
+            <div class="input-group" style="width: 800px;">
+                <input
+                    class="form-control"
+                    type="search"
+                    name="searched"
+                    placeholder="소환사 명과 #태그를 입력해주세요(ex-'hide on bush #KR1')"
+                    aria-label="Search"
+                    style="border: 1px solid #ccc; border-top-left-radius: 50px; border-bottom-left-radius: 50px; height: 80px; background-color: white;"
+                />
+                <button class="btn btn-outline-secondary" type="submit" style="border: 1px solid #ccc; border-top-right-radius: 50px; border-bottom-right-radius: 50px; height: 80px; background-color: white;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="d-flex justify-content-center my-5">
+        <img src="{% static 'images/ad1.PNG' %}" alt="광고">
+    </div>
+</div>
+{% endblock %}

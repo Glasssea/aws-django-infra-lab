@@ -1,0 +1,29 @@
+<header>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-expand-md navbar-nav fixed-top " style="background-color: #508484;">
+      <div class="container">
+        <div id="go_portfolio" style="position:absolute; top:35px; left:40px;"><a class="navbar-brand navlink" href="/">portfolio</a></div>
+        <a class="navbar-brand navlink" href="/TRBT_main" style="width: 10%;">
+          TrollBATTA
+        </a>
+        <div class="collapse navbar-collapse" id="navbarCollapse" >
+          <ul class="nav mx-auto" style="justify-content: space-around ; width:600px; ">
+            <li class="nav-item">
+                <a class="navlink" aria-current="page" href="/TRBT_main">홈</a>
+            </li>
+            <li class="nav-item">
+                <a class="navlink" aria-current="page" href="/search/">AI추천</a>
+            </li>
+            <li class="nav-item">
+                <a class="navlink" aria-current="page" href="/community/">커뮤니티</a>
+            </li>  
+          </ul>
+        </div>
+            
+            <div class="d-flex" style="width: 22%;  height:80px; align-items: center; justify-content: flex-end; padding: 20px;">
+              {% include "TRBT_main/layout/loginout.html" %}
+            </div>
+      </div>
+    </nav>
+  </header>
+  

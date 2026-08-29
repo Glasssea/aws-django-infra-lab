@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "aws-cdk": "^2.102.0",
+    "bootstrap": "^5.3.2"
+  }
+}

@@ -1,0 +1,296 @@
+
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}YOON{% endblock %}
+
+{% block content %}
+
+
+{% comment %} html문서화 {% endcomment %}
+{% comment %} <div class="hidden-text">
+<h1>skillset</h1>
+<h2>WEB</h2>
+<h3>HTML</h3>
+<p>html의 태그를 적절하게 사용할 수 있습니다.</p>
+<h3>CSS</h3>
+<p>css를 이용하여 원하는 디자인을 구현할 수 있습니다.</p>
+<h3>Javascript</h3>
+<p>javascript의 이해가 높고, 알고리즘 공부를 잘 하여 원하는 기능을 잘 구현할 수 있습니다.</p>
+<h3>Django</h3>
+<p>django 라이브러리를 사용할 수 있습니다.</p>
+<p>database를 연결하고 CRUD를 구현할 수 있습니다.</p>
+<h3>Bootstrap</h3>
+<p>부트스트랩 뿐 아니라, search를 통해 다양한 템플릿을 사용하며, 템플릿을 원하는 모양대로 수정할 수 있습니다.</p>
+<h3>Beautifulsoup</h3>
+<p>크롤링을 수행하여 다양한 정보를 모을 수 있고 모은 data를 분석 활용할 수 있습니다.</p>
+<h3>Selenium</h3>
+<p>크롤링 또는 웹 자동화를 수행할 수 있으며, 웹 테스트를 시연할 수 있습니다.</p>
+</div> {% endcomment %}
+
+<!-- WEB 관련 부분 -->
+<link rel="stylesheet" href="{% static 'css/skillset.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.1.2/fullpage.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.1.2/fullpage.min.js"></script>
+<script src="https://unpkg.com/hangul-js"></script>
+<script src="https://unpkg.com/type-hangul@latest/dist/type-hangul.min.js"></script>
+
+<div id = "fullpage">
+    <div class="section " data-anchor="slide1">
+        <div id="myskillbook" class="d-flex">
+            <div class="d-flex flex-column align-items-center">
+                <div id="web1">
+                    <img id="HJC" class="w300" src={% static "images/HJC.png" %}>
+                </div>
+                <div>
+                    <img id="photo4" class="w100" src={% static "images/bootstrap.png" %}>
+                    <img id="photo3" class="w200" src="https://static.djangoproject.com/img/logos/django-logo-negative.png">
+                </div>
+                <div>
+                    <img id="photo7" class="w70" src={% static "images/python.png" %}>
+                    <img id="photo5" class="w200" src={% static "images/bs4.png" %}>
+                    <img id="selenium" class="w150" src={% static "images/selenium.jpeg" %}>
+                    <img id="tensorflow" src={% static "images/tensorflow.png" %}>
+                </div>
+                <div>
+                    <img id="photo6" class="w150" src={% static "images/mariaDB.png" %}>
+                    <img src="https://d0.awsstatic.com/logos/powered-by-aws.png" alt="Powered by AWS Cloud Computing">
+                    <img class="w100" src={% static "images/nginx.png" %}>
+                    <img class="w200" src={% static "images/gunicorn.png" %}>
+                </div>    
+                <div>
+                    <img class="w100" src={% static "images/chatGPT.svg" %}>
+                    <img class="w300" src={% static "images/git_and_hub.jpeg" %}>
+                </div>
+            </div>
+            <div id="skilltext" class="d-flex flex-fill justify-content-between align-items-center">
+                <div id="left_button" class="d-flex align-items-center">
+                    <a><</a>
+                </div>
+                <div id="intro_1" class="align-items-center flex-grow">
+                    <h1>이런 기술을 사용할 수 있어요 :)</h1>
+                    Python을 기반으로 한 개발자입니다.
+                    <br>Python을 통한 Full-stack 개발 능력과
+                    <br>AWS를 이용한 서버구축 및 관리 능력을 갖추고 있습니다.
+                    <br>AI, ML, DL에 관심을 갖고 지속적으로 공부 중입니다.
+                    <br>협업과 버전관리를 위해 Git을 능숙하게 사용하고 있으며,
+                    <br>데이터베이스 관련하여 MariaDB를 주로 사용하며
+                    <br>SQL 언어를 이용하여 다른 데이터베이스도 다룰 수 있습니다.
+                </div>
+                <div id="intro_2" class="align-items-center flex-grow">
+                    <h2>Full-stack</h2><br> 
+                    Front-end 및 Back-end 개발을 Python을 기반으로 수행 가능합니다.<br>
+                    이 웹 사이트도 Python Django를 통해 제작되었고,<br>
+                    웹을 호스팅하기 위해 WSGI 서버인 Gunicorn을 사용했습니다.<br>
+                    웹 서버는 AWS EC2환경에 구축하였고, ubuntu와 linux에 익숙합니다.<br>
+                </div>
+                <div id="intro_3" class="align-items-center flex-grow">
+                    <h2>자연어 처리 및 AI</h2><br>
+                    Python 기반 tensorflow를 사용하여 ML응용 능력이 있습니다.<br>
+                    NLTK와 Kotlin등 자연어 처리가 가능합니다.<br>
+                    LangChain을 이용하여 다양한 AI활용이 가능합니다.<br>
+                    DINALABS 스터디 그룹 정회원으로 활동중이며,<br>
+                    다양한 래퍼런스와 논문을 접하는 일에도 시간을 투자하고있습니다.
+                </div>
+                <div id="intro_4" class="align-items-center flex-grow">
+                    <h2>데이터 분석 및 예측</h2><br>        
+                    머신 러닝 및 인공 지능 분야에 관심이 많습니다.<br>
+                    통계와 데이터 분석을 통해 예측 모델을 만들 수 있습니다.<br>
+                    데이터를 활용한 유의미한 분석 및 예측을 할 수 있습니다.<br>
+                    trollbatta project에 간단한 추천시스템이 구현되어있습니다.<br>
+                </div>
+                <div id="intro_5" class="align-items-center flex-grow">
+                    <h2>협업 및 버전 관리:</h2><br>        
+                    Git을 사용하여 협업 및 버전 관리 경험이 있습니다.<br>
+                    이 웹 사이트도 Git을 사용하여 버전관리하고 있으며<br>
+                    <br>
+                    다른 개발자들과의 협업에 적합한 커뮤니케이션 능력이 있습니다.<br><br>
+                </div>
+                <div id="intro_6" class="align-items-center flex-grow">
+                    <h2>데이터베이스:</h2><br>        
+                    주로 MariaDB 사용합니다.
+                </div>
+                <div id="right_button" class="d-flex align-items-center">
+                    <a>></a>
+                </div>
+            </div>        
+        </div>
+    </div>
+    <div class="section " data-anchor="slide2">
+        <div class="container-full">    
+            <!-- 왼쪽 버튼 영역 -->
+            <div class="button-container">
+                <div class="web-text">
+                    WEB
+                </div> <!-- "WEB" 텍스트 추가 -->
+                <button class="btn btn-html mb-2">HTML</button>
+                <button class="btn btn-css mb-2">CSS</button>
+                <button class="btn btn-javascript mb-2">Javascript</button>
+                <button class="btn btn-django mb-2">Django</button>
+                <button class="btn btn-bootstrap mb-2">Bootstrap</button>
+                <button class="btn btn-beautifulsoup mb-2">BeautifulSoup</button>
+                <button class="btn btn-selenium mb-2">Selenium</button>
+            </div>
+            <!-- 오른쪽 캔버스 영역 -->
+            <div id="canvasContainer" class="canvas-container">
+                <canvas id="webCanvas"></canvas>
+            </div>
+        </div>  
+    </div>
+    <!-- 머신러닝 AI 자연어 처리 부분 -->
+    <div class="section " data-anchor="slide3">  
+        <div id="page3" class="d-flex flex-column justify-content-start align-items-center">
+            <div class="ai-text">
+                AI's Art Valuation Challenge
+            </div>
+            <form id="artForm" method="post" action="{% url "skillset:index" %}">
+            {% csrf_token %}
+                <div id='canvasDiv' class="d-flex">
+                    <canvas id="myCanvas" name="myCanvas" width="300" height="400"></canvas>
+                    <input type="hidden" id="myCanvasData" name="myCanvasData">
+                </div>
+                <div id='toolVar' class="d-flex justify-content-between">
+                    <div id="lineWidthSlider" class="d-flex align-items-center">
+                        <input type="range" min="1" max="100" value="5" class="slider" id="slider">
+                        <input type="number" id="sliderValue" value="5">
+                    </div>
+                    <div class="d-flex">
+                        <div id="eraser" class="pencilcase d-flex justify-content-center align-items-center">
+                            <img id="eraserImg" src={% static "images/eraser.png" %} width="15px">
+                        </div>
+                        <div id="pen" class="pencilcase d-flex justify-content-center align-items-center">
+                            <img id="penImg" src={% static "images/pen.png" %} width="20px">
+                        </div>
+                        <input type="color" id="colorpicker" value="#000000">
+                    </div>
+                </div>
+                <div id="overview" class="d-flex flex-align overview justify-content-between">
+                    <div class="d-flex flex-column">
+                        <div class="d-flex">
+                            <label for="title" class="overviewLabel">title: </label>
+                            <input type="text" spellcheck="false" autocomplete="off" id="title" name="title" class="overviewInput flex-grow-1 flex-shrink-0 flex-auto" placeholder="제목을 입력해주세요."><br>
+                        </div>
+                        <div class="d-flex">
+                            <label for="artist" class="overviewLabel">artist: </label>
+                            <input type="text" spellcheck="false" autocomplete="off" id="artist" name="artist" class="overviewInput flex-grow-1 flex-shrink-0 flex-auto" placeholder="이름을 입력해주세요."><br>
+                        </div>
+                    </div>
+                    <!-- 출품 버튼 -->
+                    <div class="d-flex align-items-stretch">
+                        <button id="exhibit" type="submit">exhibit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="section " data-anchor="slide4">  
+        <div id="page4" class="d-flex flex-column justify-content-start align-items-center">
+            <div class="db-text">
+                NEW
+            </div>  
+            <div id="art_museum" class="d-flex flex-row ">
+                {% for collection in recent_collections %}
+                    <div class="d-flex flex-column ms-5">     
+                        <div class="frame">
+                            <img class="museum_art" src="{{ collection.art.url }}" alt="recently">
+                        </div>
+                        <div>
+                            <br>title : {{ collection.title }}<br>artist : {{ collection.artist }}<br>price : {% if collection.aiscore %}{{ collection.aiscore }}{% else %} yet {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="section " data-anchor="slide5">
+        <div id="page5" class="d-flex flex-column justify-content-start align-items-center">
+            <div class="git-text">GIT</div>
+            <a href="https://github.com/Glasssea" target="_blank"><img src={% static "images/github.png" %}></a>
+        </div>
+    </div>
+</div>
+
+
+<style>
+.frame{
+    border: 10px solid #cccccc; /* 액자 테두리 스타일 및 두께 조절 */
+    padding: 10px; /* 액자 내부 여백 조절 */
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5); /* 그림자 효과 조절 */
+}
+
+/* 이미지 스타일 */
+.frame img {
+    max-width: 100%; /* 이미지를 액자에 맞추기 */
+    height: auto; /* 비율 유지 */
+    display: block; /* 인라인 요소를 블록 요소로 변환 */
+}
+</style>
+
+<script>
+    new fullpage('#fullpage', {
+      //options here
+    autoScrolling:true,
+    scrollHorizontally: true,
+    anchors:['slide1', 'slide2', 'slide3', 'slide4', 'slide5'],
+    navigation: true,
+    navigationTooltips: ['INTRO', 'WEB','AI', 'DATABASE', 'GIT'],
+    showActiveTooltip: true,
+    afterLoad: function(origin, destination, direction){
+        var loadedSection = destination;
+        // 1번째 섹션에 도달했을 때
+        if(loadedSection.index == 2){
+            document.body.style.backgroundColor = '#000000';
+            var inputs = document.getElementsByClassName('overviewInput');
+            for (var i = 0; i < inputs.length; i++) {
+              inputs[i].style.backgroundColor = '#000000';
+              inputs[i].style.color = '#747576';
+            }
+            document.getElementById('page3').style.visibility = 'visible';
+            document.getElementById('page3').style.opacity = '1';
+        }
+    },
+    onLeave: function(origin, destination, direction){
+        var leavingSection = origin;
+        // 떠날 때
+        if(leavingSection.index == 2){ //1번째 AI
+            document.body.style.backgroundColor = 'white';
+            var inputs = document.getElementsByClassName('overviewInput');
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].style.backgroundColor = '#ffffff';
+                inputs[i].style.color = '#ffffff';
+            }
+            document.getElementById('page3').style.visibility = 'hidden';
+            document.getElementById('page3').style.opacity = '0';
+        }
+    }
+    });
+  </script>
+  <style>
+    /* 마우스가 올라가면 툴팁을 보여줌 */
+    .fp-nav:hover .fp-tooltip {
+        visibility: visible;
+        opacity: 1;
+    }
+    
+    #fp-nav ul li .fp-tooltip {
+      position: absolute;
+      top: -2px;
+      color: black;
+      font-size: 14px;
+      font-family: arial,helvetica,sans-serif;
+      white-space: nowrap;
+      max-width: 220px;
+      overflow: hidden;
+      display: block;
+      opacity: 0;
+      width: 0;
+      cursor: pointer;
+    }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.min.js"></script>
+    <script src="node_modules/poly-decomp/build/decomp.min.js"></script>
+    <script src="{% static 'js/skillset.js' %}"></script>
+{% endblock %}
+
+
+
+  

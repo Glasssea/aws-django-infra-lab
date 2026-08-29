@@ -1,0 +1,25 @@
+<!-- Updated header.html -->
+<div style="background-color: #add8e6;">
+    <!-- First row for YOON -->
+    <div class="row justify-content-center desktop-header">
+      <div class="col-12 text-center py-3">
+        <a href="{% url 'main:index' %}" style="font-size: 3em; font-weight: bold; color: inherit; text-decoration: none;">YOON</a>
+      </div>
+    </div>
+    <!-- Second row for menu items -->
+    <div class="row justify-content-around desktop-menu">
+      <div class="col-2 text-center py-2">
+        <a class="nav-link" href="{% url 'main:index' %}" style="font-size: 1em;">Home</a>
+      </div>
+      <div class="col-2 text-center py-2">
+        <a class="nav-link" href="{% url 'skillset:index' %}" style="font-size: 1em;">Skillset</a>
+      </div>
+      <div class="col-2 text-center py-2">
+        <a class="nav-link" href="{% url 'projects:index' %}" style="font-size: 1em;">Projects</a>
+      </div>
+      <div class="col-2 text-center py-2">
+        <a class="nav-link" href="{% url 'contact:index' %}" style="font-size: 1em;">Contact</a>
+      </div>
+    </div>
+  </div>
+  
