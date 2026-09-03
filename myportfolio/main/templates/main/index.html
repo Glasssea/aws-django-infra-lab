@@ -9,153 +9,124 @@
 
 <div style="height: 60px;"></div>
 <div id = "fullpage">
-<div class="section " data-anchor="slide1">
+
+<div class="section" data-anchor="slide1">
+  <!-- INTRO -->
   <div class="row justify-content-center my-5 flex-column align-items-center">
     <div class="col-12 col-md-4 text-center">
-      <img src="{% static 'images/SC4.jpg' %}" alt="Your Image" class="img-fluid rounded-circle mb-4">
+      <img src="{% static 'images/SC4.jpg' %}" alt="Yoon Seong Chan" class="img-fluid rounded-circle mb-4">
     </div>
     <div class="col-12 text-center d-flex align-items-center flex-column mt-2">
-      <h1 class="display-4">안녕하세요, 윤성찬입니다.</h1>
+      <p class="eyebrow">SYSTEM &amp; INFRASTRUCTURE ENGINEER</p>
+      <h1 class="headline">윤성찬</h1>
+      <p class="subtitle">Linux · AWS · Server · Network</p>
     </div>
   </div>
   <div class="row justify-content-center">
-    <div class="col-12 text-center">
-      <p>Python을 기반으로 웹 제작부터 배포능력을 갖춘 개발자입니다.</p>
-
-      <p>이 웹 사이트는 AWS EC2 서버를 구축하여 Python Django를 사용하여 제작하였고, </p>
-      <p>AWS는 독학하여 IAM Identify Center를 다룰 수 있고, EC2의 보안설정을 사용할 수 있습니다. </p>
-
-      <p>배포를 위해 Gunicorn을 애플리케이션 서버로 사용하였고, Nginx를 리버스 프록시 서버로 설정였습니다.</p>
-      <p>포트폴리오 하나에 이렇게 AWS와 도메인비용을 내고 있는 것이 비효율적이라 생각하시겠지만<br>이것도 저것도 잘 할 수 있다는 것을 보여드리고 싶었습니다.</p>
-
-      <p>보안을 위해 Let's Encrypt의 Certbot을 사용하여 무료 SSL 인증서를 발급받아 적용시켰습니다.</p>
+    <div class="col-12 col-md-8 text-center intro-copy">
+      <p>
+        Python과 Django로 웹 서비스를 직접 개발한 경험을 바탕으로,<br>
+        서비스가 실제로 동작하는 서버와 인프라 환경을 직접 구축해왔습니다.
+      </p>
+      <p>
+        문제가 발생했을 때는 추측하지 않고, 로그와 설정을 하나씩 확인하며<br>
+        원인을 좁혀 해결합니다.
+      </p>
     </div>
   </div>
 </div>
-{% comment %} <div style="height: 180px;"></div> {% endcomment %}
 
 <div class="section" data-anchor="slide2">
-  <!-- 첫 번째 주제. 사진은 왼쪽, 텍스트는 오른쪽 -->
-  <div class="row my-5">
-    <div class="col-12 col-md-6">
-      <img src="{% static 'images/yester5.jpeg' %}" alt="Your Image" class="img-fluid rounded" style="max-width:80%">
-    </div>
-    <div class="col-12 col-md-6 d-flex align-items-center">
-      <div>
-        <h2>Yoon Seong Chan</h2>
-        <p>
-          2003~2008 : 대전 양지 초등학교<br>
-          2009~2011 : 대전 송촌 중학교<br>
-          2012~2014 : 동대전고등학교<br>
-          2015~ : 용인대학교(체육학과/미졸업)<br>
-          
-          2022.03~2022.08 : 미래융합교육학원 빅데이터UI 개발자과정<br>
-          2023.02~2023.08 : 성균관대 K-Digital 협업 필터링 및 자연어 처리 기반 A.I추천 분석 시스템 제작 과정 3기<br>
-          2023.11~2024.02 : 금강산업 Full Stack Developer<br>
-          2024.01~현재 : DINOLABS스터디 1기 ~ 활동중</p>
-        </p>
+  <!-- FEATURED: AWS INFRA PROJECT -->
+  <div class="row justify-content-center my-5">
+    <div class="col-12 col-md-9">
+      <p class="eyebrow text-center">FEATURED PROJECT</p>
+      <h2 class="section-title text-center">AWS EC2 기반 Django 서비스 구축</h2>
+
+      <div class="arch-diagram">
+        <span>Client</span>
+        <span class="arrow">→</span>
+        <span>Nginx</span>
+        <span class="arrow">→</span>
+        <span>Gunicorn</span>
+        <span class="arrow">→</span>
+        <span>Django</span>
+        <span class="arrow">→</span>
+        <span>MySQL</span>
       </div>
+      <p class="arch-caption text-center">AWS EC2 (Ubuntu) 위에서 직접 구성한 배포 구조</p>
+
+      <div class="badge-row justify-content-center">
+        <span class="badge">AWS EC2</span>
+        <span class="badge">Ubuntu</span>
+        <span class="badge">Nginx</span>
+        <span class="badge">Gunicorn</span>
+        <span class="badge">Django</span>
+        <span class="badge">MySQL</span>
+        <span class="badge">systemd</span>
+      </div>
+
+      <ul class="fact-list">
+        <li>Security Group으로 SSH(22) / HTTP(80) 접근을 관리했습니다.</li>
+        <li>Gunicorn을 systemd 서비스로 등록해 애플리케이션이 상시 구동되도록 했습니다.</li>
+        <li>Elastic IP로 고정 Public IP를 구성했습니다.</li>
+        <li>Nginx static 403 오류를 로그로 원인을 좁혀 디렉토리 권한 문제로 해결했습니다.</li>
+      </ul>
+
+      <p class="text-center">
+        <a href="{% url 'projects:index' %}">자세한 내용 보기 →</a>
+      </p>
     </div>
   </div>
 </div>
-{% comment %} <div style="height: 150px;"></div> {% endcomment %}
 
 <div class="section" data-anchor="slide3">
-  <!-- 두 번째 주제. 사진은 오른쪽, 텍스트는 왼쪽 -->
-  <div class="row my-5">
-    <div class="col-12 col-md-6 d-flex align-items-center">
-      <div>
-        <h2>Overcome</h2>
-        <p>학창시절 거짓말 같겠지만 공부를 좋아했습니다.
-          <br>수학문제가 풀리지 않을 때엔
-          <br>밤을 새서라도 문제를 풀어냈고
-          <br>트레이너로 근무하던 당시에도 
-          <br>해부학, 생리학, 심리학, 교육학 등의 공부를 부지런히 하였습니다.
-          <br>갖은 방법과 최선의 노력을 해보았습니다. 
-          <br><strong>'안 되면 되게 하라, 되면 완벽하게 하라'</strong>는 마인드로 살고 있습니다.
-        </p>
+  <!-- APPROACH -->
+  <div class="row justify-content-center my-5">
+    <div class="col-12 col-md-10">
+      <h2 class="section-title text-center">Approach</h2>
+      <div class="triad">
+        <div class="triad-card">
+          <h3>BUILD</h3>
+          <p>직접 구축하고 배포합니다.</p>
+        </div>
+        <div class="triad-card">
+          <h3>TROUBLESHOOT</h3>
+          <p>로그와 설정을 확인해 원인을 좁혀 해결합니다.</p>
+        </div>
+        <div class="triad-card">
+          <h3>LEARN</h3>
+          <p>필요한 기술의 원리를 이해하고 직접 적용합니다.</p>
+        </div>
       </div>
-    </div>
-    
-    <div class="col-12 col-md-6">
-      <img src="{% static 'images/overcome.jpeg' %}" alt="Your Image" class="img-fluid rounded" style="max-width:80%">
     </div>
   </div>
 </div>
-{% comment %} <div style="height: 150px;"></div> {% endcomment %}
 
 <div class="section" data-anchor="slide4">
-  <!-- 세 번째 주제. 사진은 왼쪽, 텍스트는 오른쪽 -->
-  <div class="row my-5">
-    <div class="col-12 col-md-6">
-      <img src="{% static 'images/open_minded.jpeg' %}" alt="Your Image" class="img-fluid rounded" style="max-width:90%">
-    </div>
-    <div class="col-12 col-md-6 d-flex align-items-center">
-      <div>
-        <h2>Open-minded</h2>
-        <p>개발 쪽 공부를 시작하고 여러 사람들과 프로젝트를 다양하게 했었습니다.<br>
-          서로의 역할을 분업하여 큰 어려움 없이 프로젝트를 완성할 수 있었습니다.<br>
-          Project 탭에서 팀으로 진행했던 Troll_Batta와 기억의 미로 게임을 살펴볼 수 있습니다.<br>
-          현재는 트롤빠따라는 이름으로 riot api 개발자 등록을 하여 새 프로젝트를 진행중에 있습니다.
-
-
-        </p>
-      </div>
+  <!-- BACKGROUND -->
+  <div class="row justify-content-center my-5">
+    <div class="col-12 col-md-8">
+      <h2 class="section-title text-center">Background</h2>
+      <ul class="fact-list bg-list">
+        <li>Python / Django 기반 웹 서비스 개발 경험</li>
+        <li>Riot API를 활용한 TrollBatta 프로젝트 개발</li>
+        <li>Pandas / scikit-learn 기반 챔피언 추천 시스템(SVD) 개발</li>
+        <li>현재 네트워크 기초를 공부하며 시스템·인프라 영역으로 역량을 넓히는 중</li>
+      </ul>
     </div>
   </div>
 </div>
-{% comment %} <div style="height: 150px;"></div> {% endcomment %}
 
-<div class="section" data-anchor="slide5">
-  <!-- 네 번째 주제. 사진은 오른쪽, 텍스트는 왼쪽 -->
-  <div class="row my-5">
-    <div class="col-12 col-md-6 d-flex align-items-center">
-      <div>
-        <h2>Objective</h2>
-        <p>목적이 있으면 끝까지 놓지 않습니다.</p>
-        <p>제 목표 중에 하나는 League of legends 게임의<br>
-          AI 트롤전적 분석 사이트를 만드는 것입니다.<br>
-          이를 위해서 직접 개발도 하고 게임에도 참여하고,<br>
-          많은 사람들을 만나 지식 교류를 멈추지 않고 있습니다.</p>
-          <p>
-            현재는 저의 기본기가 너무 부족하다는 생각에 자료구조와 알고리즘을 다시 공부하고 있습니다.<br>
-            이를 위해 C언어를 통해 pointer라는 개념을 통해 메모리를 공부하고 있습니다.(24.09.01~)<br>
-          </p>
-
-      </div>
-    </div>
-    <div class="col-12 col-md-6" style = 'padding:5px;'>
-      <img src="{% static 'images/tiergraph.png' %}" alt="Your Image" class="img-fluid rounded" style="height:65%; margin-top:30px;">
-    </div>
-  </div>
-</div>
-{% comment %} <div style="height: 150px;"></div> {% endcomment %}
-
-<div class="section" data-anchor="slide6">
-  <!-- 다섯 번째 주제. 사진은 오른쪽, 텍스트는 왼쪽 -->
-  <div class="row my-5">
-    <div class="col-12 col-md-6 d-flex align-items-center">
-      <div>
-        <h2>Never giving up</h2>
-        <p>포기하지만 않는다면 안되는 것은 없습니다.</p>
-        
-      </div>
-    </div>
-    <div class="col-12 col-md-6">
-      <img src="{% static 'images/nimble.jpeg' %}" alt="Your Image" class="img-fluid rounded" style="max-width:80%">
-    </div>
-  </div>
-</div>
-  {% comment %} <div style="height: 150px;"></div> {% endcomment %}
 </div>
 <script>
   new fullpage('#fullpage', {
     //options here
     autoScrolling:true,
     scrollHorizontally: true,
-    anchors:['slide1', 'slide2', 'slide3', 'slide4', 'slide5', 'slide6'],
+    anchors:['slide1', 'slide2', 'slide3', 'slide4'],
     navigation: true,
-    navigationTooltips: ['Hi i\'m', 'Y', 'O', 'O', 'O', 'N'],
+    navigationTooltips: ['Intro', 'AWS', 'Approach', 'Background'],
     showActiveTooltip: true
   });
 </script>
@@ -179,6 +150,126 @@
   opacity: 0;
   width: 0;
   cursor: pointer;
+}
+
+.eyebrow {
+  letter-spacing: 0.12em;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #4a5a6a;
+  margin-bottom: 0.25rem;
+}
+.headline {
+  font-weight: 700;
+  margin-bottom: 0.1rem;
+}
+.subtitle {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+.intro-copy p {
+  line-height: 1.7;
+  margin-bottom: 0.75rem;
+}
+.section-title {
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+
+.arch-diagram {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'Courier New', monospace;
+  font-size: clamp(0.9rem, 2.2vw, 1.25rem);
+  font-weight: 700;
+  background: #f4f6f8;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin: 0 auto 0.5rem auto;
+  max-width: 700px;
+}
+.arch-diagram .arrow {
+  color: #8a97a3;
+  font-weight: 400;
+}
+.arch-caption {
+  color: #6b7684;
+  font-size: 0.9rem;
+  margin-bottom: 1.25rem;
+}
+
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+.badge {
+  background: #eef1f4;
+  color: #33414f;
+  border-radius: 999px;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.fact-list {
+  list-style: none;
+  padding-left: 0;
+  max-width: 640px;
+  margin: 0 auto 1rem auto;
+}
+.fact-list li {
+  line-height: 1.7;
+  margin-bottom: 0.5rem;
+  padding-left: 1.2rem;
+  position: relative;
+}
+.fact-list li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: #8a97a3;
+}
+.bg-list {
+  text-align: left;
+}
+
+.triad {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+.triad-card {
+  flex: 1 1 220px;
+  max-width: 260px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 1.5rem 1.25rem;
+  text-align: center;
+}
+.triad-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+  color: #2b3947;
+}
+.triad-card p {
+  font-size: 0.92rem;
+  color: #4a5a6a;
+  margin-bottom: 0;
+}
+
+@media (max-width: 576px) {
+  .headline { font-size: 1.8rem; }
+  .arch-diagram { font-size: 0.85rem; padding: 0.75rem; }
+  .badge { font-size: 0.75rem; padding: 0.25rem 0.6rem; }
 }
 </style>
 {% endblock %}

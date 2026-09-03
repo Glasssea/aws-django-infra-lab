@@ -11,205 +11,244 @@
 <div id="fullpage">
 
     <div class="section" data-anchor="slide1">
-        <div class="row my-5">
+        <!-- FEATURED: AWS Django Infrastructure Deployment -->
+        <div class="proj-page">
+            <div class="proj-card">
 
-            <div class="col-12 col-md-6">
-                <a href="https://trollbbatta.pages.dev/" target="_blank" rel="noopener noreferrer">
-                    <img
-                        width="80%"
-                        src="{% static 'images/TRBT_2_new.png' %}"
-                        alt="TrollBatta"
-                        class="img-fluid rounded"
-                    >
-                </a>
-            </div>
+                <p class="proj-eyebrow text-center">FEATURED PROJECT</p>
+                <h2 class="proj-title text-center">AWS Django Infrastructure Deployment</h2>
 
-            <div class="col-12 col-md-6 d-flex align-items-center">
-                <div>
+                <div class="aws-project-grid">
 
-                    <h2>TrollBatta</h2>
+                    <div class="proj-block">
+                        <h3>Problem</h3>
+                        <p>
+                            기존 Django 프로젝트를 실제 AWS 환경에서 직접 운영해보며
+                            <br>서버와 네트워크 인프라를 이해하고 싶었습니다.
+                        </p>
+                    </div>
 
-                    <p>
-                        Riot API를 활용한 League of Legends 전적 검색 서비스입니다.
-                        <br>Riot ID와 태그를 입력하면 최근 게임 전적과
-                        <br>챔피언, KDA, 아이템 등의 정보를 확인할 수 있습니다.
-                    </p>
+                    <div class="proj-block">
+                        <h3>Architecture</h3>
+                        <div class="arch-diagram">
+                            <span>Client</span>
+                            <span class="arrow">→</span>
+                            <span>Nginx</span>
+                            <span class="arrow">→</span>
+                            <span>Gunicorn</span>
+                            <span class="arrow">→</span>
+                            <span>Django</span>
+                            <span class="arrow">→</span>
+                            <span>MySQL</span>
+                        </div>
+                        <p class="text-center arch-caption">AWS EC2 (Ubuntu)</p>
+                        <div class="badge-row justify-content-center">
+                            <span class="badge">AWS</span>
+                            <span class="badge">Nginx</span>
+                            <span class="badge">Gunicorn</span>
+                            <span class="badge">Django</span>
+                            <span class="badge">MySQL</span>
+                        </div>
+                    </div>
 
-                    <p>
-                        기존 Django 기반 프로젝트에서 시작하여
-                        <br>Riot API의 변경사항과 최신 시즌 데이터를 반영하면서
-                        <br>별도의 웹 서비스로 개선하였습니다.
-                    </p>
+                    <div class="proj-block">
+                        <h3>What I Did</h3>
+                        <ul>
+                            <li>AWS EC2 Ubuntu 인스턴스 구성</li>
+                            <li>Security Group으로 SSH(22) / HTTP(80) 접근 제어</li>
+                            <li>Nginx를 Reverse Proxy로 구성</li>
+                            <li>Gunicorn을 systemd 서비스로 등록하여 Django 애플리케이션 실행</li>
+                            <li>Unix Socket을 통해 Nginx와 Gunicorn 연동</li>
+                            <li>MySQL 데이터베이스 구성 및 Django 연결</li>
+                            <li>Elastic IP를 사용하여 고정 Public IP 구성</li>
+                        </ul>
+                    </div>
 
-                    <p>
-                        주요 기능 :
-                        <br>Riot ID 기반 소환사 검색
-                        <br>최근 20게임 전적 조회
-                        <br>솔로랭크 / 자유랭크 정보 조회
-                        <br>챔피언, KDA, 아이템 정보 표시
-                        <br>최신 Data Dragon 데이터 적용
-                    </p>
-
-                    <p>
-                        <a href="https://trollbbatta.pages.dev/"
-                           target="_blank"
-                           rel="noopener noreferrer">
-                            TrollBatta 바로가기
-                        </a>
-                    </p>
+                    <div class="proj-block">
+                        <h3>Troubleshooting</h3>
+                        <p>
+                            Nginx에서 static 파일을 제공하도록 설정한 뒤 403 Forbidden 오류가 발생했습니다.
+                            <br>로그를 확인한 결과 Nginx 실행 사용자(www-data)가 /home/ubuntu 디렉토리를 통과할 권한이 없었고,
+                            <br>디렉토리 권한을 조정하여 static 파일이 정상적으로 제공되도록 해결했습니다.
+                        </p>
+                    </div>
 
                 </div>
-            </div>
 
+            </div>
         </div>
     </div>
 
 
     <div class="section" data-anchor="slide2">
+        <div class="proj-page">
+            <div class="proj-card proj-card-wide">
+                <div class="row align-items-center">
 
-        <div class="row my-5">
+                    <div class="col-12 col-md-6">
+                        <a href="https://trollbbatta.pages.dev/" target="_blank" rel="noopener noreferrer">
+                            <img
+                                width="100%"
+                                src="{% static 'images/TRBT_2_new.png' %}"
+                                alt="TrollBatta"
+                                class="img-fluid rounded"
+                            >
+                        </a>
+                    </div>
 
-            <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-6">
+                        <h2 class="proj-title">TrollBatta</h2>
 
-                <a href="https://yoonscportfolio.netlify.app/%EA%B8%B0%EC%96%B5%EC%9D%98%EB%AF%B8%EB%A1%9C/%EA%B8%B0%EC%96%B5%EC%9D%98%EB%AF%B8%EB%A1%9C.html">
-                    <img
-                        width="80%"
-                        src="{% static 'images/mz_of_memory.png' %}"
-                        alt="기억의 미로"
-                        class="img-fluid rounded"
-                    >
-                </a>
+                        <p>
+                            Riot API를 활용한 League of Legends 전적 검색 서비스입니다.
+                            <br>Riot ID와 태그를 입력하면 최근 게임 전적과
+                            <br>챔피언, KDA, 아이템 등의 정보를 확인할 수 있습니다.
+                        </p>
 
-            </div>
+                        <p>
+                            기존 Django 기반 프로젝트에서 시작하여
+                            <br>Riot API의 변경사항과 최신 시즌 데이터를 반영하면서
+                            <br>별도의 웹 서비스로 개선하였습니다.
+                        </p>
 
-            <div class="col-12 col-md-6 d-flex align-items-center">
+                        <p>
+                            주요 기능 :
+                            <br>Riot ID 기반 소환사 검색
+                            <br>최근 20게임 전적 조회
+                            <br>솔로랭크 / 자유랭크 정보 조회
+                            <br>챔피언, KDA, 아이템 정보 표시
+                            <br>최신 Data Dragon 데이터 적용
+                        </p>
 
-                <div>
-
-                    <h2>기억의 미로(team project)</h2>
-
-                    <p>
-                        수정중 : 랭킹의 순위가 제대로 반영되지 않는 부분
-                    </p>
-
-                    <p>
-                        게임 설명 :
-                        <br>제한 시간 안에 보이지 않는 지뢰를 피해 목적지에 도달하는 게임
-                        <br>캐릭터를 꾸밀 수 있도록 하여 사용자에게 흥미를 더함
-                        <br>제한시간을 둬 긴장감을 더함
-                        <br>랜덤 아이템을 배치해 사용자가 운적 요소를 느끼게 함
-                        <br>로컬스토리지를 이용하여 랭킹을 표시하였음.
-                    </p>
+                        <p>
+                            <a href="https://trollbbatta.pages.dev/"
+                               target="_blank"
+                               rel="noopener noreferrer">
+                                TrollBatta 바로가기
+                            </a>
+                        </p>
+                    </div>
 
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
 
     <div class="section" data-anchor="slide3">
+        <!-- Python/Pandas/scikit-learn SVD recommendation system -->
+        <div class="proj-page">
+            <div class="proj-card">
 
-        <div class="row my-5">
+                <h2 class="proj-title text-center">챔피언 추천 시스템 (SVD)</h2>
 
-            <div class="col-12 col-md-6">
+                <p class="text-center">
+                    TrollBatta의 소환사 검색 결과 화면에 연결되어 있는 추천 시스템입니다.
+                </p>
 
-                <a href="https://yoonscportfolio.netlify.app/pascucci/cafepascucci">
-                    <img
-                        width="80%"
-                        src="{% static 'images/pascucci.PNG' %}"
-                        alt="파스쿠찌"
-                        class="img-fluid rounded"
-                    >
-                </a>
-
-            </div>
-
-            <div class="col-12 col-md-6 d-flex align-items-center">
-
-                <div>
-
-                    <h2>파스쿠찌</h2>
-
-                    <p>
-                        내용 : 리디자인
-                        <br>디자인 기획 :
-                        <br>1. 배경의 단조로움 해결
-                        <br>기획 : 파스쿠찌의 깨끗하고 쾌적한 매장 사진 배치
-                        <br>기대효과 : 사용자가 매장의 분위기를 느껴 방문하고 싶은 마음이 들게 함
-                    </p>
-
-                    <p>
-                        2. 파스쿠찌의 메인 에스프레소
-                        <br>기획 : 파스쿠찌만의 자랑 에스프레소를 설명하는 내용 추가
-                        <br>기대효과 : 사용자로하여금 파스쿠찌의 에스프레소에 특별함을 느끼게 함
-                    </p>
-
+                <div class="proj-block">
+                    <h3>How It Works</h3>
+                    <ul>
+                        <li>Riot API로 소환사의 챔피언 숙련도(Champion Mastery) 데이터를 수집합니다.</li>
+                        <li>Pandas로 데이터를 사용자 × 챔피언 pivot 테이블 형태로 가공합니다.</li>
+                        <li>scikit-learn의 TruncatedSVD로 차원을 축소한 뒤 복원(inverse_transform)하여, 적게 플레이했지만 예측 선호도가 높은 챔피언을 찾습니다.</li>
+                        <li>검색 결과 화면에 추천 챔피언 3개를 노출합니다.</li>
+                    </ul>
                 </div>
 
+                <div class="badge-row justify-content-center">
+                    <span class="badge">Python</span>
+                    <span class="badge">Pandas</span>
+                    <span class="badge">scikit-learn</span>
+                    <span class="badge">SVD</span>
+                </div>
+
+                <p class="text-center arch-caption">
+                    관련 코드 : <code>common/mastery_SVD.py</code>, <code>search/views.py</code>
+                </p>
+
             </div>
-
         </div>
-
     </div>
 
 
     <div class="section" data-anchor="slide4">
+        <div class="proj-page">
+            <div class="proj-card proj-card-wide">
+                <div class="row align-items-center">
 
-        <div class="row my-5">
+                    <div class="col-12 col-md-6">
+                        <a href="https://yoonscportfolio.netlify.app/%EA%B8%B0%EC%96%B5%EC%9D%98%EB%AF%B8%EB%A1%9C/%EA%B8%B0%EC%96%B5%EC%9D%98%EB%AF%B8%EB%A1%9C.html">
+                            <img
+                                width="100%"
+                                src="{% static 'images/mz_of_memory.png' %}"
+                                alt="기억의 미로"
+                                class="img-fluid rounded"
+                            >
+                        </a>
+                    </div>
 
-            <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-6">
+                        <h2 class="proj-title">기억의 미로(team project)</h2>
 
-                <a href="https://yoonscportfolio.netlify.app/domino/dominos.html">
+                        <p>
+                            수정중 : 랭킹의 순위가 제대로 반영되지 않는 부분
+                        </p>
 
-                    <img
-                        width="80%"
-                        src="{% static 'images/domino.png' %}"
-                        alt="도미노피자"
-                        class="img-fluid rounded"
-                    >
-
-                </a>
-
-            </div>
-
-            <div class="col-12 col-md-6 d-flex align-items-center">
-
-                <div>
-
-                    <h2>도미노피자</h2>
-
-                    <p>
-                        내용 : 리디자인
-                    </p>
-
-                    <p>
-                        1. 상단 메뉴바의 불안정한 움직임 조율
-                        <br>기획 : 상단 메뉴바의 불안정한 움직임 부드럽게 바꿈
-                    </p>
-
-                    <p>
-                        2. 하단 요소들의 재배치
-                        <br>기획 : 하단 요소들을 블록이 쌓여있는 듯 한 모습으로 배열
-                        <br>도미노 피자의 로고 색상을 메뉴에 적용
-                        <br>맛있어 보이는 피자 메뉴 번갈아가며 노출
-                        <br>기대효과 : 웹 방문시 사용자가 피자를 먹고 싶다는 생각이 들게 함
-                        <br>도미노 로고와 비슷한 색상을 보여주어 무의식 중에 로고가 각인되게함
-                    </p>
-
-                    <p>
-                        3. 기능 javascript를 이용하여 뉴스가 자동으로 넘어가고,
-                        <br>사용자가 원할 시 클릭을 이용하여 넘길 수 있음.
-                    </p>
+                        <p>
+                            게임 설명 :
+                            <br>제한 시간 안에 보이지 않는 지뢰를 피해 목적지에 도달하는 게임
+                            <br>캐릭터를 꾸밀 수 있도록 하여 사용자에게 흥미를 더함
+                            <br>제한시간을 둬 긴장감을 더함
+                            <br>랜덤 아이템을 배치해 사용자가 운적 요소를 느끼게 함
+                            <br>로컬스토리지를 이용하여 랭킹을 표시하였음.
+                        </p>
+                    </div>
 
                 </div>
-
             </div>
-
         </div>
+    </div>
 
+
+    <div class="section" data-anchor="slide5">
+        <!-- Other Projects: publishing / redesign work, kept but de-emphasized -->
+        <div class="proj-page">
+            <div class="proj-card proj-card-wide">
+
+                <h2 class="proj-title text-center mb-4">Other Projects</h2>
+
+                <div class="row">
+
+                    <div class="col-12 col-md-6 text-center">
+                        <a href="https://yoonscportfolio.netlify.app/pascucci/cafepascucci">
+                            <img
+                                width="70%"
+                                src="{% static 'images/pascucci.PNG' %}"
+                                alt="파스쿠찌"
+                                class="img-fluid rounded"
+                            >
+                        </a>
+                        <h3 class="mt-3">파스쿠찌</h3>
+                        <p>매장 사진과 에스프레소 설명을 보완한 카페 웹사이트 리디자인</p>
+                    </div>
+
+                    <div class="col-12 col-md-6 text-center">
+                        <a href="https://yoonscportfolio.netlify.app/domino/dominos.html">
+                            <img
+                                width="70%"
+                                src="{% static 'images/domino.png' %}"
+                                alt="도미노피자"
+                                class="img-fluid rounded"
+                            >
+                        </a>
+                        <h3 class="mt-3">도미노피자</h3>
+                        <p>상단 메뉴 UI 및 하단 레이아웃을 개선한 퍼블리싱 리디자인</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>
@@ -226,16 +265,18 @@
             'slide1',
             'slide2',
             'slide3',
-            'slide4'
+            'slide4',
+            'slide5'
         ],
 
         navigation: true,
 
         navigationTooltips: [
+            'AWS Infra',
             'TrollBatta',
+            'SVD',
             'Memory Maze',
-            'Pascucci',
-            'Domino Pizza'
+            'Other'
         ],
 
         showActiveTooltip: true,
@@ -246,6 +287,25 @@
 
 
 <style>
+    :root {
+        color-scheme: light;
+    }
+
+    /*
+      Horizontal centering is done with text-align + inline-block instead of
+      flexbox. fullPage.js wraps every section's content in a display:table-cell
+      element (.fp-tableCell) for its own vertical centering. A flex child placed
+      directly inside that table-cell can have its width miscomputed on sections
+      that haven't been laid out/repainted yet (i.e. the ones currently off-screen
+      before/after the active one), which is what produced the left-aligned flash
+      during the wheel transition. text-align/inline-block centering has no such
+      dependency on the flex layout pass, so it stays identical whether a section
+      is active or not.
+    */
+    #fullpage .section {
+        background-color: #f7f9fc;
+        text-align: center;
+    }
 
     .fp-nav:hover .fp-tooltip {
         visibility: visible;
@@ -274,6 +334,181 @@
 
     }
 
+    /* Page-level layout: centers a card inside each fullpage section */
+    .proj-page {
+        width: 100%;
+        padding: 32px 16px;
+        box-sizing: border-box;
+    }
+
+    .proj-card {
+        display: inline-block;
+        vertical-align: top;
+        width: 100%;
+        max-width: 680px;
+        text-align: left;
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 2px 16px rgba(20, 30, 45, 0.08);
+        padding: 2.25rem 2rem;
+        box-sizing: border-box;
+        color: #33414f;
+    }
+    .proj-card-wide {
+        max-width: 900px;
+    }
+
+    /* AWS card (slide1) only: 2-column grid for Problem/Architecture/What I Did/Troubleshooting */
+    .section[data-anchor="slide1"] .proj-card {
+        max-width: 820px;
+        padding: 20px 20px;
+    }
+    .aws-project-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px 16px;
+    }
+    .aws-project-grid .proj-block {
+        margin-bottom: 0;
+        padding: 10px 12px;
+    }
+    .aws-project-grid .proj-block ul li {
+        margin-bottom: 0.25rem;
+        line-height: 1.45;
+    }
+    .aws-project-grid .arch-diagram {
+        margin: 0 auto 0.3rem auto;
+    }
+    .aws-project-grid .badge-row {
+        margin: 0;
+    }
+    @media (max-width: 768px) {
+        .aws-project-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .proj-eyebrow {
+        letter-spacing: 0.12em;
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: #2f6fb0;
+        margin-bottom: 0.4rem;
+    }
+    .proj-title {
+        font-weight: 800;
+        font-size: clamp(1.35rem, 2.6vw, 1.9rem);
+        color: #16202b;
+        margin-bottom: 1rem;
+    }
+
+    .proj-card p {
+        font-size: 1rem;
+        line-height: 1.75;
+        color: #33414f;
+        margin-bottom: 0.9rem;
+    }
+    .proj-card a {
+        color: #2f6fb0;
+        font-weight: 600;
+    }
+
+    .proj-block {
+        border-left: 3px solid #2f6fb0;
+        padding-left: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    .proj-block:last-child {
+        margin-bottom: 0;
+    }
+    .proj-block h3 {
+        font-size: 1.02rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        color: #16202b;
+        margin-bottom: 0.5rem;
+    }
+    .proj-block ul {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+    }
+    .proj-block li {
+        position: relative;
+        padding-left: 1.2rem;
+        margin-bottom: 0.55rem;
+        line-height: 1.7;
+        color: #33414f;
+    }
+    .proj-block li::before {
+        content: "–";
+        position: absolute;
+        left: 0;
+        color: #2f6fb0;
+        font-weight: 700;
+    }
+
+    .arch-diagram {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: 'Courier New', monospace;
+        font-size: clamp(0.95rem, 2vw, 1.15rem);
+        font-weight: 700;
+        color: #16202b;
+        background: #eef2f7;
+        border-radius: 10px;
+        padding: 0.9rem 1rem;
+        margin: 0 auto 0.5rem auto;
+        max-width: 620px;
+    }
+    .arch-diagram .arrow {
+        color: #8a97a3;
+        font-weight: 400;
+    }
+    .arch-caption {
+        color: #57636e;
+        font-size: 0.88rem;
+        margin-bottom: 1rem;
+    }
+
+    .badge-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin: 0 0 1.25rem 0;
+    }
+    .badge {
+        background: #eaf1fb;
+        color: #1f4e79;
+        border-radius: 999px;
+        padding: 0.3rem 0.9rem;
+        font-size: 0.85rem;
+        font-weight: 700;
+    }
+
+    @media (max-width: 576px) {
+        .proj-page {
+            padding: 20px 12px;
+        }
+        .proj-card {
+            padding: 1.5rem 1.25rem;
+            border-radius: 12px;
+        }
+        .proj-title {
+            font-size: 1.25rem;
+        }
+        .arch-diagram {
+            font-size: 0.85rem;
+            padding: 0.75rem;
+        }
+        .badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.65rem;
+        }
+    }
 </style>
 
 {% endblock %}

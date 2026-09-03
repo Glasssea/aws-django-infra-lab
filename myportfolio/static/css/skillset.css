@@ -56,6 +56,31 @@ top: -9999px;
     margin-bottom: 20px;
 }
 
+.skill-group{
+    margin-bottom: 14px;
+    text-align: center;
+}
+.skill-group-label{
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.08em;
+    color: #5a6b7a;
+    margin-bottom: 4px;
+}
+.skill-group-icons{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+.skill-group-muted .skill-group-icons{
+    opacity: 0.55;
+}
+.skill-group-muted img{
+    max-width: 60px;
+}
+
 #tensorflow{
     width:200px;
 }
