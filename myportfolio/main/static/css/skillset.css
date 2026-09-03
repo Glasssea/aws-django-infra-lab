@@ -57,7 +57,7 @@ top: -9999px;
 }
 
 .skill-group{
-    margin-bottom: 14px;
+    margin-bottom: 10px;
     text-align: center;
 }
 .skill-group-label{
@@ -65,14 +65,19 @@ top: -9999px;
     font-weight: bold;
     letter-spacing: 0.08em;
     color: #5a6b7a;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
 }
 .skill-group-icons{
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
-    gap: 6px;
+    gap: 24px;
+}
+.skill-icon{
+    height: 40px;
+    width: auto;
+    object-fit: contain;
 }
 .skill-group-muted .skill-group-icons{
     opacity: 0.55;
