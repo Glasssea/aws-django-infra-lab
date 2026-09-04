@@ -1,27 +1,333 @@
-{% extends "TRBT_main/base.html" %}
+{% extends 'main/base.html' %}
 {% load static %}
-{% block main %}
-<div class="container" style="z-index: 99; margin-top: 200px;">
-    <div class="justify-content-center d-flex">
-      <form class="d-flex" method="POST" action="{% url 'search:search' nickname='some_nickname' %}">
+{% block title %}SVD Champion Recommendation{% endblock %}
+
+{% block content %}
+
+<div class="svd-page">
+
+    <p class="svd-eyebrow text-center">LIVE DEMO</p>
+    <h1 class="svd-title text-center">SVD Champion Recommendation</h1>
+    <p class="svd-subtitle text-center">
+        Champion Mastery 데이터를 기반으로 TruncatedSVD를 이용해 챔피언을 추천합니다.
+    </p>
+
+    <form method="POST" action="{% url 'search:index' %}" class="svd-search-form">
         {% csrf_token %}
-        <div class="input-group" style="width: 800px;">
-          <input
-            class="form-control"
-            type="search"
-            name="searched"
-            placeholder="소환사 명과 #태그를 입력해주세요(ex-'hide on bush #KR1')"
-            aria-label="Search"
-            style="border: 1px solid #ccc; border-top-left-radius: 50px; border-bottom-left-radius: 50px; height: 80px; background-color: white;"
-          />
-          <button class="btn btn-outline-secondary" type="submit" style="border: 1px solid #ccc; border-top-right-radius: 50px; border-bottom-right-radius: 50px; height: 80px; background-color: white;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-            </svg>
-          </button>
-        </div>
-      </form>
+        <input
+            type="text"
+            name="riot_id"
+            value="{{ riot_id_input|default:'' }}"
+            placeholder="Hide on bush#KR1"
+            aria-label="Riot ID"
+            class="svd-search-input"
+        >
+        <button type="submit" class="svd-search-button">Search</button>
+    </form>
+
+    {% if error %}
+    <div class="svd-error">{{ error }}</div>
+    {% endif %}
+
+    {% if account %}
+    <div class="svd-result">
+
+        <section class="svd-block">
+            <p class="svd-block-label">PROFILE</p>
+            <div class="svd-profile">
+                <img
+                    class="svd-profile-icon"
+                    src="https://ddragon.leagueoflegends.com/cdn/{{ ddragon_version }}/img/profileicon/{{ summoner.profileIconId }}.png"
+                    alt="profile icon"
+                >
+                <div>
+                    <div class="svd-profile-name">{{ account.gameName }} <span class="svd-profile-tag">#{{ account.tagLine }}</span></div>
+                    <div class="svd-profile-level">Summoner Level {{ summoner.summonerLevel }}</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="svd-block">
+            <p class="svd-block-label">RANKED</p>
+            <div class="svd-ranked-grid">
+                <div class="svd-ranked-card">
+                    <div class="svd-ranked-queue">Solo Queue</div>
+                    {% if solo %}
+                    <div class="svd-ranked-tier">{{ solo.tier }} {{ solo.rank }}</div>
+                    <div class="svd-ranked-meta">{{ solo.leaguePoints }} LP &middot; {{ solo.wins }}승 {{ solo.losses }}패{% if solo.winRate %} &middot; 승률 {{ solo.winRate }}%{% endif %}</div>
+                    {% else %}
+                    <div class="svd-ranked-tier svd-unranked">UNRANKED</div>
+                    {% endif %}
+                </div>
+                <div class="svd-ranked-card">
+                    <div class="svd-ranked-queue">Flex Queue</div>
+                    {% if flex %}
+                    <div class="svd-ranked-tier">{{ flex.tier }} {{ flex.rank }}</div>
+                    <div class="svd-ranked-meta">{{ flex.leaguePoints }} LP &middot; {{ flex.wins }}승 {{ flex.losses }}패{% if flex.winRate %} &middot; 승률 {{ flex.winRate }}%{% endif %}</div>
+                    {% else %}
+                    <div class="svd-ranked-tier svd-unranked">UNRANKED</div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+
+        <section class="svd-block">
+            <p class="svd-block-label">SVD RECOMMENDATION</p>
+            <div class="svd-recommend-grid">
+                {% for rec in recommendations %}
+                <div class="svd-recommend-card">
+                    <img
+                        src="https://ddragon.leagueoflegends.com/cdn/{{ ddragon_version }}/img/champion/{{ rec.slug }}.png"
+                        alt="{{ rec.slug }}"
+                        class="svd-recommend-img"
+                    >
+                    <div class="svd-recommend-name">{{ rec.slug }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        {% if recent_matches %}
+        <section class="svd-block">
+            <p class="svd-block-label">RECENT MATCHES</p>
+            <div class="svd-match-list">
+                {% for match in recent_matches %}
+                <div class="svd-match-row {% if match.win %}svd-match-win{% else %}svd-match-loss{% endif %}">
+                    <img
+                        src="https://ddragon.leagueoflegends.com/cdn/{{ ddragon_version }}/img/champion/{{ match.champion_slug }}.png"
+                        alt="{{ match.champion_slug }}"
+                        class="svd-match-champ"
+                    >
+                    <div class="svd-match-champ-name">{{ match.champion_slug }}</div>
+                    <div class="svd-match-result">{% if match.win %}승리{% else %}패배{% endif %}</div>
+                    <div class="svd-match-kda">{{ match.kills }} / {{ match.deaths }} / {{ match.assists }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
     </div>
-  </div>
+    {% endif %}
+
+</div>
+
+<style>
+    .svd-page {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 2.5rem 1rem 3rem;
+    }
+    .svd-eyebrow {
+        letter-spacing: 0.12em;
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: #2f6fb0;
+        margin-bottom: 0.4rem;
+    }
+    .svd-title {
+        font-weight: 800;
+        font-size: clamp(1.4rem, 3vw, 1.9rem);
+        color: #16202b;
+        margin-bottom: 0.6rem;
+    }
+    .svd-subtitle {
+        color: #57636e;
+        font-size: 0.95rem;
+        margin-bottom: 1.75rem;
+    }
+
+    .svd-search-form {
+        display: flex;
+        gap: 0.5rem;
+        max-width: 480px;
+        margin: 0 auto 1rem auto;
+    }
+    .svd-search-input {
+        flex: 1;
+        border: 1px solid #dce6f2;
+        border-radius: 999px;
+        padding: 0.65rem 1.1rem;
+        font-size: 0.95rem;
+    }
+    .svd-search-input:focus {
+        outline: none;
+        border-color: #2f6fb0;
+    }
+    .svd-search-button {
+        border: none;
+        border-radius: 999px;
+        padding: 0.65rem 1.4rem;
+        background: #2f6fb0;
+        color: #fff;
+        font-weight: 700;
+        font-size: 0.9rem;
+        cursor: pointer;
+    }
+    .svd-search-button:hover {
+        background: #275c94;
+    }
+
+    .svd-error {
+        max-width: 480px;
+        margin: 0 auto 1.5rem auto;
+        background: #fff3f3;
+        color: #a83232;
+        border: 1px solid #f0c2c2;
+        border-radius: 10px;
+        padding: 0.7rem 1.1rem;
+        text-align: center;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .svd-result {
+        margin-top: 1rem;
+    }
+    .svd-block {
+        border-top: 1px solid #e9edf1;
+        padding: 1.75rem 0;
+    }
+    .svd-block:first-child {
+        border-top: none;
+    }
+    .svd-block-label {
+        letter-spacing: 0.1em;
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: #8a97a3;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+
+    .svd-profile {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+    }
+    .svd-profile-icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+    }
+    .svd-profile-name {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #16202b;
+    }
+    .svd-profile-tag {
+        color: #8a97a3;
+        font-weight: 500;
+    }
+    .svd-profile-level {
+        color: #57636e;
+        font-size: 0.9rem;
+    }
+
+    .svd-ranked-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+    .svd-ranked-card {
+        text-align: center;
+        border: 1px solid #e9edf1;
+        border-radius: 10px;
+        padding: 1rem;
+    }
+    .svd-ranked-queue {
+        font-size: 0.8rem;
+        color: #8a97a3;
+        font-weight: 700;
+        margin-bottom: 0.4rem;
+    }
+    .svd-ranked-tier {
+        font-weight: 700;
+        color: #16202b;
+        margin-bottom: 0.3rem;
+    }
+    .svd-unranked {
+        color: #8a97a3;
+    }
+    .svd-ranked-meta {
+        font-size: 0.82rem;
+        color: #57636e;
+    }
+
+    .svd-recommend-grid {
+        display: flex;
+        justify-content: center;
+        gap: 1.25rem;
+        flex-wrap: wrap;
+    }
+    .svd-recommend-card {
+        text-align: center;
+    }
+    .svd-recommend-img {
+        width: 84px;
+        height: 84px;
+        border-radius: 12px;
+        border: 1px solid #e9edf1;
+    }
+    .svd-recommend-name {
+        margin-top: 0.5rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #16202b;
+    }
+
+    .svd-match-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .svd-match-row {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        border-radius: 8px;
+        padding: 0.5rem 0.75rem;
+        border-left: 4px solid transparent;
+    }
+    .svd-match-win {
+        background: #f2f8ff;
+        border-left-color: #2f6fb0;
+    }
+    .svd-match-loss {
+        background: #fff5f5;
+        border-left-color: #d9534f;
+    }
+    .svd-match-champ {
+        width: 32px;
+        height: 32px;
+        border-radius: 6px;
+    }
+    .svd-match-champ-name {
+        flex: 1;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #16202b;
+    }
+    .svd-match-result {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: #57636e;
+    }
+    .svd-match-kda {
+        font-size: 0.82rem;
+        color: #57636e;
+    }
+
+    @media (max-width: 480px) {
+        .svd-search-form {
+            flex-direction: column;
+        }
+        .svd-profile {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+</style>
 
 {% endblock %}

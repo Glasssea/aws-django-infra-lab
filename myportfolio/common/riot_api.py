@@ -1,8 +1,49 @@
+from pathlib import Path
+
 from sklearn.decomposition import TruncatedSVD
 import pandas as pd
 import requests
 from common.api_key import api_key
 from common.championData import champion
+
+_COMMON_DIR = Path(__file__).resolve().parent
+_MASTERY_CSV_PATH = _COMMON_DIR / 'mastery.csv'
+
+
+class RiotAPIError(Exception):
+    """Base class for user-facing Riot API failures."""
+
+
+class RiotIDNotFoundError(RiotAPIError):
+    pass
+
+
+class RiotAPIKeyError(RiotAPIError):
+    pass
+
+
+class RiotRateLimitError(RiotAPIError):
+    pass
+
+
+class InsufficientRecommendationDataError(Exception):
+    """Not enough mastery data (yet) to compute a champion recommendation."""
+
+
+def _riot_request(url, headers):
+    """GET a Riot API url and raise a typed, user-facing error on failure
+    instead of returning a malformed/empty payload that later blows up as an
+    unrelated KeyError/IndexError deep in view logic."""
+    response = requests.get(url, headers=headers, timeout=10)
+    if response.status_code == 404:
+        raise RiotIDNotFoundError()
+    if response.status_code in (401, 403):
+        raise RiotAPIKeyError()
+    if response.status_code == 429:
+        raise RiotRateLimitError()
+    response.raise_for_status()
+    return response.json()
+
 
 def account_v1__gamename_tagline(gamename,tagline=None):
     url = f"https://asia.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{gamename}/{tagline}"
@@ -13,8 +54,7 @@ def account_v1__gamename_tagline(gamename,tagline=None):
     "Origin": "https://developer.riotgames.com",
     "X-Riot-Token": api_key
     }
-    response = requests.get(url, headers=headers)
-    return response.json()
+    return _riot_request(url, headers)
 
 def summoner_v4__encryptedpuuid(puuid):
     url = f"https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{puuid}"
@@ -25,8 +65,7 @@ def summoner_v4__encryptedpuuid(puuid):
     "Origin": "https://developer.riotgames.com",
     "X-Riot-Token": api_key
     }
-    response = requests.get(url, headers=headers)
-    return response.json()
+    return _riot_request(url, headers)
 
 def get_summonerInfo(summonerName): # summonerName -> summonerId
     url = f"https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/{summonerName}"
@@ -58,15 +97,28 @@ def get_summonerInfo(summonerName): # summonerName -> summonerId
 def leadue_v4__encryptedsummonerid(summonerId):
     url = f"https://kr.api.riotgames.com/lol/league/v4/entries/by-summoner/{summonerId}"
     headers = {
-    
+
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
     "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
     "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
     "Origin": "https://developer.riotgames.com",
     "X-Riot-Token": api_key
 }
-    response = requests.get(url, headers=headers)
-    return response.json()
+    return _riot_request(url, headers)
+
+def leadue_v4__bypuuid(puuid):
+    # summoner-v4 no longer returns an encrypted summonerId (Riot removed it
+    # from the response), so league-v4 lookups have to go by puuid directly
+    # instead of leadue_v4__encryptedsummonerid(info['id']).
+    url = f"https://kr.api.riotgames.com/lol/league/v4/entries/by-puuid/{puuid}"
+    headers = {
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
+    "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
+    "Origin": "https://developer.riotgames.com",
+    "X-Riot-Token": api_key
+    }
+    return _riot_request(url, headers)
 
 def get_mastery_bypuuid(puuid):
     url = f"https://kr.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/{puuid}"
@@ -77,22 +129,24 @@ def get_mastery_bypuuid(puuid):
         "Origin": "https://developer.riotgames.com",
         "X-Riot-Token": api_key
     }
-    response = requests.get(url, headers=headers)
-    df = pd.DataFrame(response.json())
-    print(df.head())
-    # df = df[['puuid','championId','championLevel','championPoints']] #puuid가 사라짐;;
+    payload = _riot_request(url, headers)
+    df = pd.DataFrame(payload)
+    if df.empty or 'championId' not in df.columns:
+        raise InsufficientRecommendationDataError()
     df = df[['puuid','championId','championLevel','championPoints']]
-    print(df.head())
 
     to_add_puuid = df.loc[0]['puuid']
+    # Always read from and write back to the same file (this used to read
+    # common/mastery.csv but save to a different path at the process's cwd,
+    # so new searches never actually persisted into the dataset SVD trains on).
     try:
-        exdf = pd.read_csv('common/mastery.csv')
+        exdf = pd.read_csv(_MASTERY_CSV_PATH)
     except FileNotFoundError:
-        exdf = pd.read_csv('myportfolio/common/mastery.csv')
+        exdf = pd.DataFrame(columns=['puuid', 'championId', 'championLevel', 'championPoints'])
     exdf = exdf[exdf['puuid'] != to_add_puuid] #새로 추가하는 data가 이미 있는 유저의 데이터라면 그 유저에 대한 기존 데이터 다 삭제
     final_df = pd.concat([exdf, df])
-    
-    final_df.to_csv('mastery.csv', index=False)
+
+    final_df.to_csv(_MASTERY_CSV_PATH, index=False)
 
     return final_df
 
@@ -126,7 +180,20 @@ def point_ML(df, puuid): # 위에서 나온 dataframe으로 머신러닝 돌리�
     duplicates = df.duplicated(subset=['puuid', 'championId'], keep=False)
     pivot_df = df.pivot(index='puuid', columns='championId', values='championPoints')
     fill_na_df = pivot_df.fillna(0) # fill na 를 한 dataframe 하나 만들어주기
-    svd = TruncatedSVD(n_components=25) # 컴포넌트는 차원축소(164차원이었던 dataframe 을 25 차원으로 줄여줌)
+    if puuid not in pivot_df.index:
+        raise InsufficientRecommendationDataError()
+    # TruncatedSVD requires n_components < n_features (and it must fit within
+    # n_samples too), so the champion/user matrix size caps how many
+    # components are possible -- 25 was safe back when this always ran
+    # against a large accumulated dataset, but isn't guaranteed as the
+    # champion roster and user base change. Use the largest safe value up to
+    # 25 instead of the fixed 25.
+    n_samples, n_features = fill_na_df.shape
+    max_components = min(n_samples, n_features) - 1
+    if max_components < 1:
+        raise InsufficientRecommendationDataError()
+    n_components = min(25, max_components)
+    svd = TruncatedSVD(n_components=n_components) # 컴포넌트는 차원축소(현재 데이터 크기에 맞춰 최대 25 차원으로 줄여줌)
     df_point_transformed = svd.fit_transform(fill_na_df) # fillnadf을 svd를 적용해서 차원 축소시켜줌 그걸 변수에저장
     df_point_transformed = pd.DataFrame(df_point_transformed, index=fill_na_df.index) # 학습시킨걸로 크기 줄여서 예측
     df_point_predicted = svd.inverse_transform(df_point_transformed) # 인버스 통해서 크기 차원축소 했던걸 원래대로 돌려줌
@@ -150,9 +217,12 @@ def point_ML(df, puuid): # 위에서 나온 dataframe으로 머신러닝 돌리�
         # 해당 사용자에 대한 추천을 저장합니다.
         recommendations[user] = low_original_high_predicted.index.tolist()
 
-    # 추천 결과를 출력합니다.
-    print(recommendations.get(puuid)) # 
-    return(recommendations.get(puuid))
+    result = recommendations.get(puuid)
+    # Callers expect exactly 3 recommended champions; fewer than that means
+    # there wasn't enough mastery data below the user's median to recommend from.
+    if not result or len(result) < 3:
+        raise InsufficientRecommendationDataError()
+    return result
     
     
 # point_ML(df)
@@ -181,8 +251,8 @@ def masterty_SVD(nickname):
 # info = get_summonerInfo('trollbat')
 # print(info.get('puuid'))
 
-def get_matchId(puuid):
-    url = f"https://asia.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids?start=0&count=100"
+def get_matchId(puuid, count=5):
+    url = f"https://asia.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids?start=0&count={count}"
     headers = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36",
     "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
@@ -190,8 +260,7 @@ def get_matchId(puuid):
     "Origin": "https://developer.riotgames.com",
     "X-Riot-Token": api_key
     }
-    response = requests.get(url, headers=headers)
-    return response
+    return _riot_request(url, headers)
 
 def get_matchInfo(matchId):
     url = f"https://asia.api.riotgames.com/lol/match/v5/matches/{matchId}"
@@ -201,9 +270,31 @@ def get_matchInfo(matchId):
     "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
     "Origin": "https://developer.riotgames.com",
     "X-Riot-Token": api_key
-    } 
-    response = requests.get(url, headers=headers)
-    return response
+    }
+    return _riot_request(url, headers)
+
+def get_recent_matches(puuid, count=5):
+    """Best-effort recent-match summary for display only. Callers should treat
+    any failure here as non-fatal (recent matches are a lower priority than
+    the SVD recommendation) -- see search/views.py's run_svd_lookup."""
+    match_ids = get_matchId(puuid, count=count)
+    matches = []
+    for match_id in match_ids:
+        detail = get_matchInfo(match_id)
+        participant = next(
+            (p for p in detail['info']['participants'] if p['puuid'] == puuid),
+            None,
+        )
+        if not participant:
+            continue
+        matches.append({
+            'champion_slug': participant['championName'],
+            'win': participant['win'],
+            'kills': participant['kills'],
+            'deaths': participant['deaths'],
+            'assists': participant['assists'],
+        })
+    return matches
 
 def get_tagLine(puuid):
     url = f"https://asia.api.riotgames.com/riot/account/v1/accounts/by-puuid/{puuid}"
@@ -214,8 +305,7 @@ def get_tagLine(puuid):
         "Origin": "https://developer.riotgames.com",
         "X-Riot-Token": api_key
     }
-    response = requests.get(url, headers=headers)
-    return response.json()
+    return _riot_request(url, headers)
 
 # print(get_tagLine("soerso-LMacN5eiMW2dqWEHA7br3adVNQgoDnotBXcOTFLBFBytjDTRO6JZAzhebWO8zlCebUGda-w"))
 

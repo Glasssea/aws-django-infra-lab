@@ -14,10 +14,8 @@
 <body>
 
   <!-- Header -->
-  <header class="fixed-top">
-    {% include 'main/layout/header.html' %}
-  </header>
-  
+  {% include 'main/layout/header.html' %}
+
 
   <!-- Content -->
   <div class="container">
@@ -25,6 +23,9 @@
     <!-- Content goes here -->
     {% endblock %}
   </div>
+
+  <!-- Footer -->
+  {% include 'main/layout/footer.html' %}
 
   <!-- Bootstrap JS (optional) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

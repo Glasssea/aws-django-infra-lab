@@ -1,275 +1,445 @@
-
 {% extends 'main/base.html' %}
 {% load static %}
 {% block title %}Yoon's Portfolio{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.1.2/fullpage.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.1.2/fullpage.min.js"></script>
 
-<div style="height: 60px;"></div>
-<div id = "fullpage">
+<div class="home-page">
 
-<div class="section" data-anchor="slide1">
-  <!-- INTRO -->
-  <div class="row justify-content-center my-5 flex-column align-items-center">
-    <div class="col-12 col-md-4 text-center">
-      <img src="{% static 'images/SC4.jpg' %}" alt="Yoon Seong Chan" class="img-fluid rounded-circle mb-4">
+  <!-- 1. HERO -->
+  <section class="hero-section">
+    <div class="row justify-content-center flex-column align-items-center">
+      <div class="col-12 col-md-4 text-center">
+        <img src="{% static 'images/SC4.jpg' %}" alt="Yoon Seong Chan" class="img-fluid rounded-circle mb-4">
+      </div>
+      <div class="col-12 text-center d-flex align-items-center flex-column mt-2">
+        <p class="eyebrow">SYSTEM &amp; INFRASTRUCTURE ENGINEER</p>
+        <h1 class="headline">윤성찬</h1>
+        <p class="subtitle">Linux · AWS · Server · Network</p>
+      </div>
     </div>
-    <div class="col-12 text-center d-flex align-items-center flex-column mt-2">
-      <p class="eyebrow">SYSTEM &amp; INFRASTRUCTURE ENGINEER</p>
-      <h1 class="headline">윤성찬</h1>
-      <p class="subtitle">Linux · AWS · Server · Network</p>
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8 text-center intro-copy">
+        <p>
+          Python과 Django로 웹 서비스를 직접 개발한 경험을 바탕으로,<br>
+          서비스가 실제로 동작하는 서버와 인프라 환경을 직접 구축해왔습니다.
+        </p>
+        <p>
+          문제가 발생했을 때는 추측하지 않고, 로그와 설정을 하나씩 확인하며<br>
+          원인을 좁혀 해결합니다.
+        </p>
+      </div>
     </div>
-  </div>
-  <div class="row justify-content-center">
-    <div class="col-12 col-md-8 text-center intro-copy">
-      <p>
-        Python과 Django로 웹 서비스를 직접 개발한 경험을 바탕으로,<br>
-        서비스가 실제로 동작하는 서버와 인프라 환경을 직접 구축해왔습니다.
-      </p>
-      <p>
-        문제가 발생했을 때는 추측하지 않고, 로그와 설정을 하나씩 확인하며<br>
-        원인을 좁혀 해결합니다.
-      </p>
+  </section>
+
+  <!-- 2. FEATURED INFRASTRUCTURE PROJECT -->
+  <section class="section-block featured-section">
+    <p class="eyebrow text-center">FEATURED INFRASTRUCTURE PROJECT</p>
+    <h2 class="section-title text-center">이 포트폴리오 사이트를 직접 구축한 AWS 인프라</h2>
+    <p class="featured-lede text-center">
+      지금 보고 계신 이 사이트는 AWS EC2 + Ubuntu 위에 직접 구성한 서버 환경에서<br>
+      Nginx · Gunicorn · Django · MySQL로 서비스되고 있습니다.
+    </p>
+
+    <div class="stack-chip-row justify-content-center">
+      <span class="stack-chip">EC2 t3.micro</span>
+      <span class="stack-chip">Ubuntu 24.04</span>
+      <span class="stack-chip">1 GiB RAM</span>
+      <span class="stack-chip">2GB Swap File</span>
+      <span class="stack-chip">MySQL 8.0</span>
+      <span class="stack-chip">Gunicorn</span>
+      <span class="stack-chip">systemd</span>
+      <span class="stack-chip">Nginx</span>
+      <span class="stack-chip">Unix Socket</span>
+      <span class="stack-chip">Elastic IP</span>
+      <span class="stack-chip">Security Group</span>
     </div>
-  </div>
-</div>
 
-<div class="section" data-anchor="slide2">
-  <!-- FEATURED: AWS INFRA PROJECT -->
-  <div class="row justify-content-center my-5">
-    <div class="col-12 col-md-9">
-      <p class="eyebrow text-center">FEATURED PROJECT</p>
-      <h2 class="section-title text-center">AWS EC2 기반 Django 서비스 구축</h2>
-
+    <div class="flow-block">
+      <p class="flow-label">Architecture</p>
       <div class="arch-diagram">
         <span>Client</span>
         <span class="arrow">→</span>
         <span>Nginx</span>
         <span class="arrow">→</span>
-        <span>Gunicorn</span>
+        <span>Gunicorn (Unix Socket)</span>
         <span class="arrow">→</span>
         <span>Django</span>
         <span class="arrow">→</span>
+        <span>MySQL 8.0</span>
+      </div>
+    </div>
+
+    <div class="flow-block">
+      <p class="flow-label">Deployment Flow</p>
+      <div class="arch-diagram deploy-flow">
+        <span>EC2</span>
+        <span class="arrow">→</span>
+        <span>Ubuntu</span>
+        <span class="arrow">→</span>
+        <span>Swap</span>
+        <span class="arrow">→</span>
         <span>MySQL</span>
-      </div>
-      <p class="arch-caption text-center">AWS EC2 (Ubuntu) 위에서 직접 구성한 배포 구조</p>
-
-      <div class="badge-row justify-content-center">
-        <span class="badge">AWS EC2</span>
-        <span class="badge">Ubuntu</span>
-        <span class="badge">Nginx</span>
-        <span class="badge">Gunicorn</span>
-        <span class="badge">Django</span>
-        <span class="badge">MySQL</span>
-        <span class="badge">systemd</span>
-      </div>
-
-      <ul class="fact-list">
-        <li>Security Group으로 SSH(22) / HTTP(80) 접근을 관리했습니다.</li>
-        <li>Gunicorn을 systemd 서비스로 등록해 애플리케이션이 상시 구동되도록 했습니다.</li>
-        <li>Elastic IP로 고정 Public IP를 구성했습니다.</li>
-        <li>Nginx static 403 오류를 로그로 원인을 좁혀 디렉토리 권한 문제로 해결했습니다.</li>
-      </ul>
-
-      <p class="text-center">
-        <a href="{% url 'projects:index' %}">자세한 내용 보기 →</a>
-      </p>
-    </div>
-  </div>
-</div>
-
-<div class="section" data-anchor="slide3">
-  <!-- APPROACH -->
-  <div class="row justify-content-center my-5">
-    <div class="col-12 col-md-10">
-      <h2 class="section-title text-center">Approach</h2>
-      <div class="triad">
-        <div class="triad-card">
-          <h3>BUILD</h3>
-          <p>직접 구축하고 배포합니다.</p>
-        </div>
-        <div class="triad-card">
-          <h3>TROUBLESHOOT</h3>
-          <p>로그와 설정을 확인해 원인을 좁혀 해결합니다.</p>
-        </div>
-        <div class="triad-card">
-          <h3>LEARN</h3>
-          <p>필요한 기술의 원리를 이해하고 직접 적용합니다.</p>
-        </div>
+        <span class="arrow">→</span>
+        <span>Gunicorn + systemd</span>
+        <span class="arrow">→</span>
+        <span>Nginx</span>
+        <span class="arrow">→</span>
+        <span>Elastic IP / Security Group</span>
+        <span class="arrow">→</span>
+        <span class="live-badge">LIVE</span>
       </div>
     </div>
-  </div>
-</div>
 
-<div class="section" data-anchor="slide4">
-  <!-- BACKGROUND -->
-  <div class="row justify-content-center my-5">
-    <div class="col-12 col-md-8">
-      <h2 class="section-title text-center">Background</h2>
-      <ul class="fact-list bg-list">
-        <li>Python / Django 기반 웹 서비스 개발 경험</li>
-        <li>Riot API를 활용한 TrollBatta 프로젝트 개발</li>
-        <li>Pandas / scikit-learn 기반 챔피언 추천 시스템(SVD) 개발</li>
-        <li>현재 네트워크 기초를 공부하며 시스템·인프라 영역으로 역량을 넓히는 중</li>
-      </ul>
+    <ul class="fact-list">
+      <li>t3.micro(1GiB RAM)의 제한된 메모리를 보완하기 위해 EBS 저장공간을 활용한 2GB Swap File을 직접 구성했습니다.</li>
+      <li>Nginx static 403 오류를 로그로 원인을 좁혀 Linux 디렉토리 권한 문제로 확인하고 해결했습니다.</li>
+    </ul>
+
+    <p class="text-center">
+      <a href="{% url 'projects:index' %}#aws-project">AWS 인프라 상세 보기 →</a>
+    </p>
+  </section>
+
+  <!-- 3. TECH STACK -->
+  <section class="section-block">
+    <h2 class="section-title text-center">Tech Stack</h2>
+    <div class="stack-grid">
+      <div class="stack-group">
+        <p class="stack-group-label">Infrastructure</p>
+        <ul class="stack-list">
+          <li>AWS</li>
+          <li>Linux</li>
+          <li>Nginx</li>
+          <li>Gunicorn</li>
+          <li>MySQL</li>
+        </ul>
+      </div>
+      <div class="stack-group">
+        <p class="stack-group-label">Development</p>
+        <ul class="stack-list">
+          <li>Python</li>
+          <li>Django</li>
+        </ul>
+      </div>
+      <div class="stack-group">
+        <p class="stack-group-label">Tools</p>
+        <ul class="stack-list">
+          <li>Git</li>
+          <li>GitHub</li>
+        </ul>
+      </div>
     </div>
-  </div>
-</div>
+  </section>
+
+  <!-- 4. APPROACH -->
+  <section class="section-block">
+    <h2 class="section-title text-center">Approach</h2>
+    <div class="triad">
+      <div class="triad-card">
+        <h3>BUILD</h3>
+        <p>직접 구축하고 배포합니다.</p>
+      </div>
+      <div class="triad-card">
+        <h3>TROUBLESHOOT</h3>
+        <p>로그와 설정을 확인해 원인을 좁혀 해결합니다.</p>
+      </div>
+      <div class="triad-card">
+        <h3>LEARN</h3>
+        <p>필요한 기술의 원리를 이해하고 직접 적용합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. OTHER PROJECTS -->
+  <section class="section-block other-projects-section">
+    <h2 class="section-title text-center">Other Projects</h2>
+    <p class="other-projects-caption text-center">Python / 데이터 처리 경험을 보여주는 개발 프로젝트</p>
+
+    <div class="mini-project-grid">
+      <a class="mini-project-card" href="{% url 'projects:index' %}#trollbatta">
+        <img src="{% static 'images/TRBT_2_new.png' %}" alt="TrollBatta" class="mini-project-thumb">
+        <div>
+          <h3>TrollBatta</h3>
+          <p>Riot API 기반 League of Legends 전적 검색 서비스</p>
+        </div>
+      </a>
+
+      <a class="mini-project-card" href="{% url 'projects:index' %}#svd">
+        <div class="mini-project-thumb mini-project-thumb-text">SVD</div>
+        <div>
+          <h3>SVD Recommendation System</h3>
+          <p>Pandas · scikit-learn 기반 챔피언 추천 시스템</p>
+        </div>
+      </a>
+
+      <a class="mini-project-card" href="{% url 'projects:index' %}#memory-maze">
+        <img src="{% static 'images/mz_of_memory.png' %}" alt="기억의 미로" class="mini-project-thumb">
+        <div>
+          <h3>Memory Maze</h3>
+          <p>팀 프로젝트로 진행한 웹 게임</p>
+        </div>
+      </a>
+    </div>
+  </section>
 
 </div>
-<script>
-  new fullpage('#fullpage', {
-    //options here
-    autoScrolling:true,
-    scrollHorizontally: true,
-    anchors:['slide1', 'slide2', 'slide3', 'slide4'],
-    navigation: true,
-    navigationTooltips: ['Intro', 'AWS', 'Approach', 'Background'],
-    showActiveTooltip: true
-  });
-</script>
+
 <style>
-/* 마우스가 올라가면 툴팁을 보여줌 */
-.fp-nav:hover .fp-tooltip {
-    visibility: visible;
-    opacity: 1;
-}
+  :root {
+    color-scheme: light;
+  }
 
-#fp-nav ul li .fp-tooltip {
-  position: absolute;
-  top: -2px;
-  color: black;
-  font-size: 14px;
-  font-family: arial,helvetica,sans-serif;
-  white-space: nowrap;
-  max-width: 220px;
-  overflow: hidden;
-  display: block;
-  opacity: 0;
-  width: 0;
-  cursor: pointer;
-}
+  .home-page {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 2.5rem 1rem 1rem;
+  }
 
-.eyebrow {
-  letter-spacing: 0.12em;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #4a5a6a;
-  margin-bottom: 0.25rem;
-}
-.headline {
-  font-weight: 700;
-  margin-bottom: 0.1rem;
-}
-.subtitle {
-  font-size: 1.1rem;
-  color: #555;
-  margin-bottom: 0.5rem;
-}
-.intro-copy p {
-  line-height: 1.7;
-  margin-bottom: 0.75rem;
-}
-.section-title {
-  font-weight: 700;
-  margin-bottom: 1.25rem;
-}
+  .section-block {
+    padding: 3.5rem 0;
+    border-top: 1px solid #e9edf1;
+  }
+  .hero-section {
+    padding-bottom: 3rem;
+  }
 
-.arch-diagram {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 0.4rem;
-  font-family: 'Courier New', monospace;
-  font-size: clamp(0.9rem, 2.2vw, 1.25rem);
-  font-weight: 700;
-  background: #f4f6f8;
-  border-radius: 10px;
-  padding: 1rem 1.25rem;
-  margin: 0 auto 0.5rem auto;
-  max-width: 700px;
-}
-.arch-diagram .arrow {
-  color: #8a97a3;
-  font-weight: 400;
-}
-.arch-caption {
-  color: #6b7684;
-  font-size: 0.9rem;
-  margin-bottom: 1.25rem;
-}
+  .eyebrow {
+    letter-spacing: 0.12em;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #4a5a6a;
+    margin-bottom: 0.25rem;
+  }
+  .headline {
+    font-weight: 700;
+    margin-bottom: 0.1rem;
+  }
+  .subtitle {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 0.5rem;
+  }
+  .intro-copy p {
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+  }
 
-.badge-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-.badge {
-  background: #eef1f4;
-  color: #33414f;
-  border-radius: 999px;
-  padding: 0.3rem 0.85rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-}
+  /* Featured AWS project */
+  .featured-section {
+    background: #f7faff;
+    border: 1px solid #dce6f2;
+    border-top: 1px solid #dce6f2;
+    border-radius: 16px;
+    padding: 2.5rem 1.75rem;
+  }
+  .featured-lede {
+    color: #4a5a6a;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
 
-.fact-list {
-  list-style: none;
-  padding-left: 0;
-  max-width: 640px;
-  margin: 0 auto 1rem auto;
-}
-.fact-list li {
-  line-height: 1.7;
-  margin-bottom: 0.5rem;
-  padding-left: 1.2rem;
-  position: relative;
-}
-.fact-list li::before {
-  content: "—";
-  position: absolute;
-  left: 0;
-  color: #8a97a3;
-}
-.bg-list {
-  text-align: left;
-}
+  .stack-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 1.75rem;
+  }
+  .stack-chip {
+    background: #eaf1fb;
+    color: #1f4e79;
+    border-radius: 999px;
+    padding: 0.3rem 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
 
-.triad {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-}
-.triad-card {
-  flex: 1 1 220px;
-  max-width: 260px;
-  background: #f8f9fa;
-  border-radius: 12px;
-  padding: 1.5rem 1.25rem;
-  text-align: center;
-}
-.triad-card h3 {
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  margin-bottom: 0.5rem;
-  color: #2b3947;
-}
-.triad-card p {
-  font-size: 0.92rem;
-  color: #4a5a6a;
-  margin-bottom: 0;
-}
+  .flow-block {
+    margin-bottom: 1.5rem;
+  }
+  .flow-label {
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #57636e;
+    margin-bottom: 0.5rem;
+  }
+  .arch-diagram {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Courier New', monospace;
+    font-size: clamp(0.8rem, 2vw, 1.05rem);
+    font-weight: 700;
+    background: #ffffff;
+    border: 1px solid #dce6f2;
+    border-radius: 10px;
+    padding: 0.9rem 1rem;
+    margin: 0 auto;
+    max-width: 720px;
+  }
+  .arch-diagram .arrow {
+    color: #8a97a3;
+    font-weight: 400;
+  }
+  .live-badge {
+    background: #1f4e79;
+    color: #fff;
+    border-radius: 999px;
+    padding: 0.15rem 0.7rem;
+    font-size: 0.85em;
+  }
 
-@media (max-width: 576px) {
-  .headline { font-size: 1.8rem; }
-  .arch-diagram { font-size: 0.85rem; padding: 0.75rem; }
-  .badge { font-size: 0.75rem; padding: 0.25rem 0.6rem; }
-}
+  .fact-list {
+    list-style: none;
+    padding-left: 0;
+    max-width: 640px;
+    margin: 0 auto 1.25rem auto;
+  }
+  .fact-list li {
+    line-height: 1.7;
+    margin-bottom: 0.5rem;
+    padding-left: 1.2rem;
+    position: relative;
+  }
+  .fact-list li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: #8a97a3;
+  }
+
+  /* Tech stack */
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .stack-group-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #2f6fb0;
+    margin-bottom: 0.6rem;
+    text-align: center;
+  }
+  .stack-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+  }
+  .stack-list li {
+    line-height: 1.9;
+    color: #33414f;
+  }
+
+  /* Approach */
+  .triad {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+  .triad-card {
+    flex: 1 1 220px;
+    max-width: 260px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+  }
+  .triad-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+    color: #2b3947;
+  }
+  .triad-card p {
+    font-size: 0.92rem;
+    color: #4a5a6a;
+    margin-bottom: 0;
+  }
+
+  /* Other projects */
+  .other-projects-caption {
+    color: #6b7684;
+    font-size: 0.9rem;
+    margin-bottom: 1.75rem;
+  }
+  .mini-project-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  .mini-project-card {
+    display: flex;
+    flex-direction: column;
+    color: inherit;
+    text-decoration: none;
+    border: 1px solid #e9edf1;
+    border-radius: 10px;
+    padding: 0.9rem;
+  }
+  .mini-project-card:hover {
+    border-color: #b9cde3;
+  }
+  .mini-project-thumb {
+    width: 100%;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 0.6rem;
+  }
+  .mini-project-thumb-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eef2f7;
+    color: #57636e;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .mini-project-card h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #16202b;
+    margin-bottom: 0.3rem;
+  }
+  .mini-project-card p {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: #57636e;
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 700px) {
+    .stack-grid {
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+    .mini-project-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .headline { font-size: 1.8rem; }
+    .featured-section { padding: 1.75rem 1.1rem; }
+    .arch-diagram { font-size: 0.8rem; padding: 0.75rem; }
+    .stack-chip { font-size: 0.75rem; padding: 0.25rem 0.65rem; }
+  }
 </style>
+
 {% endblock %}
