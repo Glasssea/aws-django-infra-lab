@@ -145,6 +145,69 @@
         </div>
     </section>
 
+        <!-- 3. Where You Die -->
+    <section class="project-section">
+        <div class="container">
+            <div class="row align-items-center">
+
+                <div class="col-12 col-md-5">
+                    <div class="project-code-card">
+                        <div class="project-code-label">
+                            RIOT MATCH-V5 · TIMELINE
+                        </div>
+
+                        <pre><code>Riot ID
+  ↓
+PUUID
+  ↓
+Match IDs
+  ↓
+Timeline API
+  ↓
+CHAMPION_KILL
+  ↓
+victimId == participantId
+  ↓
+x · y · timestamp</code></pre>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-7">
+                    <h2 class="proj-title">Where You Die</h2>
+
+                    <p>
+                        Riot API의 Match-V5 Timeline 데이터를 활용하여
+                        League of Legends 경기에서 사용자의 사망 위치와
+                        발생 시간을 분석하는 프로젝트입니다.
+                    </p>
+
+                    <p>
+                        Riot ID를 PUUID로 변환한 뒤 최근 경기의 Timeline을 수집하고,
+                        <code>CHAMPION_KILL</code> 이벤트의
+                        <code>victimId</code>를 분석하여 사용자의 사망 이벤트를 식별합니다.
+                        이후 맵 좌표(X, Y)와 게임 진행 시간을 추출하여
+                        3차원 데이터로 시각화합니다.
+                    </p>
+
+                    <div class="project-tech">
+                        <span>Python</span>
+                        <span>Django</span>
+                        <span>Riot API</span>
+                        <span>Match-V5</span>
+                        <span>Timeline</span>
+                    </div>
+
+                    <p class="text-center mt-4">
+                        <a href="{% url 'where_you_die:index' %}">
+                            Live Demo →
+                        </a>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
     <!-- 3. SVD Recommendation System (medium~small, Python/Data emphasis) -->
     <section id="svd" class="proj-section">
         <div class="proj-card proj-card-small">

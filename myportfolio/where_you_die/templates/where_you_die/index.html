@@ -1,0 +1,1010 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Where You Die | YOON{% endblock %}
+
+{% block content %}
+
+<div class="wyd-page">
+
+    <div class="container">
+
+        <!-- Header -->
+        <section class="wyd-header">
+
+            <div class="wyd-eyebrow">
+                RIOT API · MATCH-V5 · TIMELINE
+            </div>
+
+            <h1>Where You Die</h1>
+
+            <p class="wyd-description">
+                최근 20경기의 Timeline 데이터를 분석하여
+                내가 언제, 어디에서 죽었는지 시각화합니다.
+            </p>
+
+        </section>
+
+
+        <!-- Search -->
+        <section class="wyd-search-card">
+
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="wyd-input-group">
+
+                    <input
+                        type="text"
+                        name="riot_id"
+                        value="{{ riot_id_input|default:'' }}"
+                        placeholder="Riot ID (예: Troll BAT#KR1)"
+                        autocomplete="off"
+                        required
+                    >
+
+                    <button type="submit">
+                        분석하기
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- Error -->
+        {% if error %}
+
+        <div class="wyd-error">
+            {{ error }}
+        </div>
+
+        {% endif %}
+
+
+        <!-- Result -->
+        {% if result %}
+
+        <section class="wyd-result">
+
+            <div class="wyd-result-header">
+
+                <div>
+                    <span class="wyd-result-label">
+                        ANALYSIS RESULT
+                    </span>
+
+                    <h2>
+                        {{ result.account.gameName }}
+                        <small>
+                            #{{ result.account.tagLine }}
+                        </small>
+                    </h2>
+                </div>
+
+            </div>
+
+
+            <!-- Stats -->
+            <div class="wyd-stats">
+
+                <div class="wyd-stat">
+                    <span>분석 경기</span>
+                    <strong>
+                        {{ result.analyzed_matches }}
+                    </strong>
+                </div>
+
+                <div class="wyd-stat">
+                    <span>총 사망</span>
+                    <strong>
+                        {{ result.total_deaths }}
+                    </strong>
+                </div>
+
+                <div class="wyd-stat">
+                    <span>경기당 평균 사망</span>
+                    <strong>
+                        {{ result.average_deaths }}
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <!-- Death Visualization -->
+            {% if result.deaths %}
+
+            {{ result.deaths|json_script:"death-data" }}
+
+            <div class="wyd-chart-card">
+
+                <div class="wyd-chart-header">
+
+                    <div>
+                        <span class="wyd-chart-label">
+                            DEATH POSITION
+                        </span>
+
+                        <h3>Death Map</h3>
+                    </div>
+
+                    <p>
+                        전체 사망 위치는 희미하게 표시됩니다.
+                        시간바를 움직이면 해당 1분 동안 발생한
+                        사망 위치가 강조됩니다.
+                    </p>
+
+                </div>
+
+
+                <!-- XY Map -->
+<div
+<div class="death-map-wrap">
+
+    <img
+        class="death-map-background"
+        src="{% static 'where_you_die/images/summoners_rift.png' %}"
+        alt=""
+    >
+
+    <canvas
+        id="death-map"
+        aria-label="사망 위치 XY 좌표"
+    ></canvas>
+
+</div>
+                <!-- Timeline -->
+                <div class="death-timeline">
+
+                    <div class="death-time-display">
+
+                        <strong id="current-time">
+                            전체
+                        </strong>
+
+                        <span id="current-count"></span>
+
+                    </div>
+
+
+                    <input
+                        id="death-time-slider"
+                        type="range"
+                        min="0"
+                        max="1"
+                        value="0"
+                        step="1"
+                        aria-label="게임 시간 선택"
+                    >
+
+
+                    <div class="death-time-labels">
+
+                        <span>
+                            전체
+                        </span>
+
+                        <span id="max-time-label"></span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Legend -->
+                <div class="death-legend">
+
+                    <span>
+                        <i class="legend-dot legend-all"></i>
+                        전체 사망
+                    </span>
+
+                    <span>
+                        <i class="legend-dot legend-current"></i>
+                        선택 시간 사망
+                    </span>
+
+                </div>
+
+            </div>
+
+            {% else %}
+
+            <div class="wyd-empty">
+                분석된 경기에서 사망 기록을 찾지 못했습니다.
+            </div>
+
+            {% endif %}
+
+        </section>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+<style>
+
+.wyd-page {
+    padding: 70px 0 100px;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.wyd-header {
+    text-align: center;
+    max-width: 850px;
+    margin: 0 auto 40px;
+}
+
+.wyd-eyebrow {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: #77818c;
+    margin-bottom: 12px;
+}
+
+.wyd-header h1 {
+    margin: 0;
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+}
+
+.wyd-description {
+    max-width: 650px;
+    margin: 18px auto 0;
+    color: #687582;
+    line-height: 1.8;
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+.wyd-search-card {
+    max-width: 760px;
+    margin: 0 auto 50px;
+}
+
+.wyd-input-group {
+    display: flex;
+    gap: 10px;
+}
+
+.wyd-input-group input {
+    flex: 1;
+    min-width: 0;
+    height: 52px;
+    padding: 0 18px;
+
+    border: 1px solid #d9e0e7;
+    border-radius: 8px;
+
+    font-size: 1rem;
+
+    background: #ffffff;
+}
+
+.wyd-input-group input:focus {
+    outline: none;
+    border-color: #8997a5;
+}
+
+.wyd-input-group button {
+    flex-shrink: 0;
+
+    height: 52px;
+    padding: 0 28px;
+
+    border: 0;
+    border-radius: 8px;
+
+    background: #20252a;
+    color: white;
+
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.wyd-input-group button:hover {
+    background: #000000;
+}
+
+
+/* =========================
+   ERROR
+========================= */
+
+.wyd-error {
+    max-width: 760px;
+    margin: -25px auto 40px;
+
+    padding: 16px 20px;
+
+    border: 1px solid #efd0d0;
+    border-radius: 8px;
+
+    background: #fff7f7;
+    color: #a44343;
+}
+
+
+/* =========================
+   RESULT
+========================= */
+
+.wyd-result {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.wyd-result-header {
+    margin-bottom: 25px;
+}
+
+.wyd-result-label,
+.wyd-chart-label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-size: 0.72rem;
+    font-weight: 700;
+
+    letter-spacing: 0.12em;
+    color: #8b96a0;
+}
+
+.wyd-result-header h2 {
+    margin: 0;
+
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.wyd-result-header h2 small {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #7c8791;
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+.wyd-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 15px;
+
+    margin-bottom: 25px;
+}
+
+.wyd-stat {
+    padding: 22px;
+
+    border: 1px solid #e0e5ea;
+    border-radius: 10px;
+
+    background: #ffffff;
+}
+
+.wyd-stat span {
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-size: 0.8rem;
+    color: #7c8791;
+}
+
+.wyd-stat strong {
+    display: block;
+
+    font-size: 1.7rem;
+    line-height: 1;
+}
+
+
+/* =========================
+   CHART CARD
+========================= */
+
+.wyd-chart-card {
+    padding: 30px;
+
+    border: 1px solid #e0e5ea;
+    border-radius: 12px;
+
+    background: #ffffff;
+}
+
+.wyd-chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    gap: 30px;
+
+    margin-bottom: 25px;
+}
+
+.wyd-chart-header h3 {
+    margin: 0;
+
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.wyd-chart-header p {
+    max-width: 450px;
+
+    margin: 0;
+
+    color: #77818c;
+
+    font-size: 0.88rem;
+    line-height: 1.65;
+}
+
+
+/* =========================
+   DEATH MAP
+========================= */
+
+.death-map-wrap {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+
+    aspect-ratio: 1 / 1;
+
+    position: relative;
+    overflow: hidden;
+
+    border: 1px solid #dce3ea;
+    border-radius: 12px;
+
+    background: #fff;
+}
+
+.death-map-background {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: fill;
+
+    opacity: 0.15;
+
+    z-index: 1;
+
+    pointer-events: none;
+}
+
+#death-map {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 2;
+}
+
+background-size: 10% 10%;
+}
+
+#death-map {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+}
+
+
+/* =========================
+   TIMELINE
+========================= */
+
+.death-timeline {
+    max-width: 760px;
+
+    margin: 24px auto 0;
+}
+
+.death-time-display {
+    display: flex;
+
+    justify-content: center;
+    align-items: baseline;
+
+    gap: 12px;
+
+    margin-bottom: 10px;
+}
+
+.death-time-display strong {
+    font-size: 1.4rem;
+}
+
+.death-time-display span {
+    color: #687582;
+    font-size: 0.9rem;
+}
+
+#death-time-slider {
+    width: 100%;
+    cursor: pointer;
+}
+
+.death-time-labels {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 5px;
+
+    color: #7a8793;
+    font-size: 0.8rem;
+}
+
+
+/* =========================
+   LEGEND
+========================= */
+
+.death-legend {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 25px;
+
+    margin-top: 22px;
+
+    color: #687582;
+
+    font-size: 0.85rem;
+}
+
+.death-legend span {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+.legend-dot {
+    display: inline-block;
+
+    width: 10px;
+    height: 10px;
+
+    border-radius: 50%;
+}
+
+.legend-all {
+    background: rgba(31, 78, 121, 0.12);
+
+    border: 1px solid
+        rgba(31, 78, 121, 0.25);
+}
+
+.legend-current {
+    background: #d94b4b;
+}
+
+
+/* =========================
+   EMPTY
+========================= */
+
+.wyd-empty {
+    padding: 25px;
+
+    text-align: center;
+
+    color: #77818c;
+
+    border: 1px solid #e0e5ea;
+    border-radius: 10px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 767px) {
+
+    .wyd-page {
+        padding-top: 40px;
+    }
+
+    .wyd-header h1 {
+        font-size: 2.3rem;
+    }
+
+    .wyd-input-group {
+        flex-direction: column;
+    }
+
+    .wyd-input-group button {
+        width: 100%;
+    }
+
+    .wyd-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .wyd-chart-card {
+        padding: 18px;
+    }
+
+    .wyd-chart-header {
+        display: block;
+    }
+
+    .wyd-chart-header p {
+        margin-top: 12px;
+    }
+
+    .death-legend {
+        flex-wrap: wrap;
+    }
+
+}
+
+</style>
+
+
+{% if result.deaths %}
+
+<script>
+
+(function () {
+
+    const dataElement =
+        document.getElementById("death-data");
+
+    const canvas =
+        document.getElementById("death-map");
+
+    const slider =
+        document.getElementById("death-time-slider");
+
+    const currentTime =
+        document.getElementById("current-time");
+
+    const currentCount =
+        document.getElementById("current-count");
+
+    const maxTimeLabel =
+        document.getElementById("max-time-label");
+
+
+    if (
+        !dataElement ||
+        !canvas ||
+        !slider
+    ) {
+        return;
+    }
+
+
+    const deaths =
+        JSON.parse(dataElement.textContent);
+
+
+    if (!deaths.length) {
+        return;
+    }
+
+
+    const ctx =
+        canvas.getContext("2d");
+
+
+    /*
+     * Riot Summoner's Rift 좌표를
+     * 0 ~ 15000 범위로 표현.
+     */
+    const MAP_MIN = 0;
+    const MAP_MAX = 15000;
+
+
+    /*
+     * 데이터에서 가장 늦은 사망 시간을 찾아
+     * 슬라이더 최대값으로 사용.
+     */
+    const maxMinute = Math.ceil(
+        Math.max(
+            ...deaths.map(
+                death => Number(death.minutes) || 0
+            )
+        )
+    );
+
+
+    slider.max = Math.max(maxMinute, 1);
+
+    maxTimeLabel.textContent =
+        `${maxMinute}분`;
+
+
+    /*
+     * Riot X → Canvas X
+     */
+    function mapX(x, width) {
+
+        return (
+            (x - MAP_MIN) /
+            (MAP_MAX - MAP_MIN)
+        ) * width;
+
+    }
+
+
+    /*
+     * Riot Y → Canvas Y
+     *
+     * Canvas는 아래쪽으로 Y가 증가하므로
+     * 화면에서 Riot 좌표와 맞도록 뒤집음.
+     */
+    function mapY(y, height) {
+
+        return height - (
+            (y - MAP_MIN) /
+            (MAP_MAX - MAP_MIN)
+        ) * height;
+
+    }
+
+
+    function drawPoint(
+        death,
+        radius,
+        fillStyle,
+        width,
+        height
+    ) {
+
+        const rawX = Number(death.x);
+        const rawY = Number(death.y);
+
+
+        if (
+            !Number.isFinite(rawX) ||
+            !Number.isFinite(rawY)
+        ) {
+            return;
+        }
+
+
+        const x =
+            mapX(rawX, width);
+
+        const y =
+            mapY(rawY, height);
+
+
+        ctx.beginPath();
+
+        ctx.arc(
+            x,
+            y,
+            radius,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fillStyle =
+            fillStyle;
+
+        ctx.fill();
+
+    }
+
+
+    function draw() {
+
+        const rect =
+            canvas.getBoundingClientRect();
+
+        const width =
+            rect.width;
+
+        const height =
+            rect.height;
+
+
+        ctx.clearRect(
+            0,
+            0,
+            width,
+            height
+        );
+
+
+        /*
+         * 전체 사망 위치.
+         *
+         * opacity 0.10으로 전부 표시.
+         * 같은 위치에 점이 겹치면
+         * 자연스럽게 더 진하게 보임.
+         */
+        deaths.forEach(function (death) {
+
+            drawPoint(
+                death,
+                5,
+                "rgba(31, 78, 121, 0.10)",
+                width,
+                height
+            );
+
+        });
+
+
+        const selectedMinute =
+            Number(slider.value);
+
+
+        /*
+         * 0 = 전체 보기
+         *
+         * 아무 사망도 별도로 강조하지 않음.
+         */
+        if (selectedMinute === 0) {
+
+            currentTime.textContent =
+                "전체";
+
+            currentCount.textContent =
+                `${deaths.length} deaths`;
+
+            return;
+
+        }
+
+
+        /*
+         * 선택한 1분 구간.
+         *
+         * 예:
+         * 7 → 7:00 이상 ~ 8:00 미만
+         */
+        const selectedDeaths =
+            deaths.filter(function (death) {
+
+                const minute =
+                    Number(death.minutes);
+
+                return (
+                    minute >= selectedMinute &&
+                    minute < selectedMinute + 1
+                );
+
+            });
+
+
+        /*
+         * 선택 시간 사망 강조.
+         */
+        selectedDeaths.forEach(
+            function (death) {
+
+                /*
+                 * 바깥쪽 반투명 원
+                 */
+                drawPoint(
+                    death,
+                    9,
+                    "rgba(217, 75, 75, 0.20)",
+                    width,
+                    height
+                );
+
+
+                /*
+                 * 중심 원
+                 */
+                drawPoint(
+                    death,
+                    5,
+                    "rgba(217, 75, 75, 0.95)",
+                    width,
+                    height
+                );
+
+            }
+        );
+
+
+        currentTime.textContent =
+            `${selectedMinute}:00 - ` +
+            `${selectedMinute}:59`;
+
+
+        currentCount.textContent =
+            `${selectedDeaths.length} deaths`;
+
+    }
+
+
+    /*
+     * 고해상도 / Retina 대응.
+     */
+    function resizeCanvas() {
+
+        const rect =
+            canvas.getBoundingClientRect();
+
+        const dpr =
+            window.devicePixelRatio || 1;
+
+
+        canvas.width =
+            Math.round(rect.width * dpr);
+
+        canvas.height =
+            Math.round(rect.height * dpr);
+
+
+        ctx.setTransform(
+            dpr,
+            0,
+            0,
+            dpr,
+            0,
+            0
+        );
+
+
+        draw();
+
+    }
+
+
+    slider.addEventListener(
+        "input",
+        draw
+    );
+
+
+    window.addEventListener(
+        "resize",
+        resizeCanvas
+    );
+
+
+    resizeCanvas();
+
+})();
+
+</script>
+
+{% endif %}
+
+
+{% endblock %}

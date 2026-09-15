@@ -23,6 +23,7 @@ urlpatterns = [
     path('', include('main.urls')),
     path('skillset/', include('skillset.urls')),
     path('projects/', include('projects.urls')),
+    path('where-you-die/', include('where_you_die.urls')),
     path('contact/', include('contact.urls')),
     path('TRBT_main/', include('TRBT_main.urls')),
     path('community/', include('community.urls')),

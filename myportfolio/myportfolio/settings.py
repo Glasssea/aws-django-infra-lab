@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
     'skillset.apps.SkillsetConfig',
     'projects.apps.ProjectsConfig',
+    'where_you_die.apps.WhereYouDieConfig',
     'contact.apps.ContactConfig',
     'TRBT_main.apps.TrbtMainConfig',
     'community.apps.CommunityConfig',
